@@ -1,12 +1,29 @@
 <!DOCTYPE HTML>
 <html xmlns:th="https://www.thymeleaf.org">
 <head>
-    <title>Getting Started: Handling Form Submission</title>
+    <title>All People</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 </head>
 <body>
-<h1>Result</h1>
-<p th:text="'content: ' + ${person.name}"></p>
+<h1>All People</h1>
+<p th:text="'content: ' + ${people}"></p>
+<p th:text="'second  list: ' + ${allPeople}"></p>
+<p th:each="person : ${allPeople}"></p>
+
+<table class = "table table-striped">
+    <tr>
+        <th>Person's Name</th>
+        <th>Wins</th>
+        <th>Losses</th>
+        <th>Actions</th>
+    </tr>
+    <tr th:each="person : ${allPeople}">
+        <td th:text="${person.name}"></td>
+        <td th:text="${person.victories}"></td>
+        <td th:text="${person.loses}"></td>
+        <td><button>Delete</button><button>Update</button></td>
+    </tr>
+</table>
 <a href="/form">Submit another message</a>
 </body>
 </html>

@@ -75,8 +75,16 @@ public class PeopleController implements WebMvcConfigurer {
 
     @GetMapping(path="/all")
     public String getAllPeople(Model model){
-        List<Person> i = peopleService.getAllPeople();
-        model.addAttribute("person", i.get(0));
+        List<Person> allPeople = peopleService.getAllPeople();
+        String peopleString = "";
+
+        for(int num = 0; num < allPeople.size(); num++){
+            peopleString+=allPeople.get(num).getName()+"\n";
+        }
+
+        model.addAttribute("allPeople", allPeople);
+
+        model.addAttribute("people", peopleString);
         return "all_people";
     }
 

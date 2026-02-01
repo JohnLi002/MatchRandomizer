@@ -1,0 +1,39 @@
+Checklist
+
+Step 1: People
+- Create a person
+- Store person in a table
+- Display all people
+- Update/edit a person
+- Delete a person
+
+Person
+Full Name: Troy Li
+Wins: 10
+Losses: 20
+
+
+Step 2: Matches
+Define Match
+Contains: Person 1, Person 2, location, who won, who lost
+Store Matches
+Display Matches
+Edit Matches
+Delete Matches
+
+Match
+Person 1: Troy Li
+Person 2: John Li
+Location: John's House
+Outcome: John Li
+
+Step 3: Bracket
+
+Match 1
+
+Match 2
+
+Match 3
+
+Match 4
+

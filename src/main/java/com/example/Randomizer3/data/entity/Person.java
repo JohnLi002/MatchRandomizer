@@ -56,4 +56,9 @@ public class Person {
     public void setLoses(int i) {
         loses = i;
     }
+
+    @Override
+    public String toString(){
+        return name;
+    }
 }
