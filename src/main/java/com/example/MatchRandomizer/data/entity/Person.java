@@ -1,7 +1,6 @@
-package com.example.Randomizer3.data.entity;
+package com.example.MatchRandomizer.data.entity;
 
 import jakarta.persistence.*;
-import lombok.Data;
 
 @Entity
 @Table(name = "people")

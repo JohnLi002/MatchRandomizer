@@ -1,10 +1,10 @@
-package com.example.Randomizer3;
+package com.example.MatchRandomizer;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class Randomizer3ApplicationTests {
+class MatchRandomizerApplicationTests {
 
 	@Test
 	void contextLoads() {

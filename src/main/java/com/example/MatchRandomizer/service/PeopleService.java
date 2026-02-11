@@ -1,7 +1,7 @@
-package com.example.Randomizer3.service;
+package com.example.MatchRandomizer.service;
 
-import com.example.Randomizer3.data.repo.PeopleRepo;
-import com.example.Randomizer3.data.entity.Person;
+import com.example.MatchRandomizer.data.repo.PeopleRepo;
+import com.example.MatchRandomizer.data.entity.Person;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

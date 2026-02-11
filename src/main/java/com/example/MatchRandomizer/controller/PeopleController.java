@@ -1,10 +1,10 @@
-package com.example.Randomizer3.controller;
+package com.example.MatchRandomizer.controller;
 
-import com.example.Randomizer3.Form;
-import com.example.Randomizer3.data.entity.Environment;
-import com.example.Randomizer3.service.EnvironmentService;
-import com.example.Randomizer3.service.PeopleService;
-import com.example.Randomizer3.data.entity.Person;
+import com.example.MatchRandomizer.Form;
+import com.example.MatchRandomizer.data.entity.Environment;
+import com.example.MatchRandomizer.service.EnvironmentService;
+import com.example.MatchRandomizer.service.PeopleService;
+import com.example.MatchRandomizer.data.entity.Person;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;

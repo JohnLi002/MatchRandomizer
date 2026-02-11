@@ -1,7 +1,7 @@
-package com.example.Randomizer3.service;
+package com.example.MatchRandomizer.service;
 
-import com.example.Randomizer3.data.entity.Environment;
-import com.example.Randomizer3.data.repo.EnvironmentRepo;
+import com.example.MatchRandomizer.data.entity.Environment;
+import com.example.MatchRandomizer.data.repo.EnvironmentRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

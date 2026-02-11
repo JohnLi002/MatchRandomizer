@@ -1,6 +1,6 @@
-package com.example.Randomizer3.data.repo;
+package com.example.MatchRandomizer.data.repo;
 
-import com.example.Randomizer3.data.entity.Environment;
+import com.example.MatchRandomizer.data.entity.Environment;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface EnvironmentRepo extends JpaRepository<Environment, Integer> {
