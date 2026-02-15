@@ -4,17 +4,20 @@ import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 public class Form {
 
-    private long id;
+    private int id;
 
     @NotNull
     @Size(min=1)
     private String name;
 
-    public long getId() {
+    private int victories;
+    private int loses;
+
+    public int getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(int id) {
         this.id = id;
     }
 
@@ -26,4 +29,19 @@ public class Form {
         this.name = name;
     }
 
+    public int getVictories() {
+        return victories;
+    }
+
+    public void setVictories(int victories) {
+        this.victories = victories;
+    }
+
+    public int getLoses() {
+        return loses;
+    }
+
+    public void setLoses(int loses) {
+        this.loses = loses;
+    }
 }

@@ -76,17 +76,53 @@ public class PeopleController implements WebMvcConfigurer {
     @GetMapping(path="/all")
     public String getAllPeople(Model model){
         List<Person> allPeople = peopleService.getAllPeople();
-        String peopleString = "";
-
-        for(int num = 0; num < allPeople.size(); num++){
-            peopleString+=allPeople.get(num).getName()+"\n";
-        }
 
         model.addAttribute("allPeople", allPeople);
-
-        model.addAttribute("people", peopleString);
         return "all_people";
     }
+
+    @GetMapping(path="/edit_person/{id}")
+    public String editPerson(@PathVariable (value = "id") int ID, Model model){
+        Person p = peopleService.findPersonByID(ID);
+
+        Form form = new Form();
+        form.setId(ID);
+        //form.setVictories(p.getVictories());
+        model.addAttribute("form", form);
+        model.addAttribute("edited_person",p);
+        return "edit_person";
+    }
+
+    @PostMapping("/edit_person")
+    public String editPersonSubmit(@ModelAttribute Form form, BindingResult bindingResult, Model model) {
+        Person newPerson = peopleService.findPersonByID(form.getId());
+        if(!form.getName().isEmpty()){
+            newPerson.setName(form.getName());
+        }
+        if(form.getLoses() != newPerson.getLoses()){
+            newPerson.setLoses(form.getLoses());
+        }
+        if(form.getVictories() != newPerson.getVictories()){
+            newPerson.setVictories(form.getVictories());
+        }
+
+        peopleService.saveDetails(newPerson);
+        List<Person> allPeople = peopleService.getAllPeople();
+        model.addAttribute("allPeople", allPeople);
+        return "all_people";
+    }
+
+    @GetMapping(path="/delete_person/{id}")
+    public String deletePerson(@PathVariable (value = "id") int ID, Model model){
+        Person p = peopleService.findPersonByID(ID);
+
+        peopleService.deletePerson(p);
+
+        List<Person> allPeople = peopleService.getAllPeople();
+        model.addAttribute("allPeople", allPeople);
+        return "all_people";
+    }
+
 
     @GetMapping(path="/match")
     public String randomizeMatch(Model model){

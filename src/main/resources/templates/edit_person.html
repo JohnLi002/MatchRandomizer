@@ -1,0 +1,45 @@
+<!DOCTYPE HTML>
+<html xmlns:th="https://www.thymeleaf.org">
+<head>
+    <title>Match Randomizer</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+<body>
+<h1>Editing Person</h1>
+<p>Input new person </p>
+<table class = "table table-striped">
+    <tr>
+        <td>Name:</td>
+        <td th:text="${edited_person.name}"></td>
+    </tr>
+    <tr>
+        <td>Victories</td>
+        <td th:text="${edited_person.victories}"></td>
+    </tr>
+    <tr>
+        <td>Loses</td>
+        <td th:text="${edited_person.loses}"></td>
+    </tr>
+</table>
+
+<form action="#" th:action="@{/edit_person}" th:object="${form}" method="post">
+    <table>
+        <tr>
+            <td>Name:</td>
+            <td><input type="text" th:field="*{name}" th:placeholder="${edited_person.name}"/></td>
+        </tr>
+        <tr>
+            <td>Victories:</td>
+            <td><input type="number" th:field="*{victories}" th:value="${edited_person.victories}" /></td>
+        </tr>
+        <tr>
+            <td>Loses:</td>
+            <td><input type="number" th:field="*{loses}"/></td>
+        </tr>
+        <tr>
+            <td><button type="submit">Submit</button></td>
+        </tr>
+    </table>
+</form>
+</body>
+</html>

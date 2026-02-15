@@ -42,4 +42,20 @@ public class PeopleService {
     public int getNumberOfPeople(){
         return peopleRepo.findAll().size();
     }
+
+    public Person findPersonByID(int id){
+        List<Person> listOfPeople = getAllPeople();
+        Person p = null;
+        for(int i = 0; i < listOfPeople.size(); i++){
+            p = listOfPeople.get(i);
+            if(p.getID() == id){
+                break;
+            }
+        }
+        return p;
+    }
+
+    public void deletePerson(Person p){
+        peopleRepo.delete(p);
+    }
 }

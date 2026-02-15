@@ -1,11 +1,11 @@
 Checklist
 
 Step 1: People
-- Create a person
-- Store person in a table
-- Display all people
-- Update/edit a person
-- Delete a person
+- Create a person *
+- Store person in a table *
+- Display all people *
+- Update/edit a person (bug)
+- Delete a person *
 
 Person
 Full Name: Troy Li
