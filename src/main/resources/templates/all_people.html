@@ -15,12 +15,14 @@
         <th>Person's Name</th>
         <th>Wins</th>
         <th>loses</th>
+        <th>ID</th>
         <th>Actions</th>
     </tr>
     <tr th:each="person : ${allPeople}">
         <td th:text="${person.name}"></td>
         <td th:text="${person.victories}"></td>
         <td th:text="${person.loses}"></td>
+        <td th:text="${person.ID}"></td>
         <td>
             <a th:href="@{/delete_person/{id}(id=${person.ID})}"><button>Delete</button></a>
             <a th:href="@{/edit_person/{id}(id=${person.ID})}" class="btn btn-primary"><buuton>Update</buuton></a>

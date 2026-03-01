@@ -7,30 +7,22 @@
 <body>
 <h1>Editing Person</h1>
 <p>Input new person </p>
-<table class = "table table-striped">
-    <tr>
-        <td>Name:</td>
-        <td th:text="${edited_person.name}"></td>
-    </tr>
-    <tr>
-        <td>Victories</td>
-        <td th:text="${edited_person.victories}"></td>
-    </tr>
-    <tr>
-        <td>Loses</td>
-        <td th:text="${edited_person.loses}"></td>
-    </tr>
-</table>
+<p th:text="'Person ID: ' + ${form.id}"></p>
+
 
 <form action="#" th:action="@{/edit_person}" th:object="${form}" method="post">
     <table>
         <tr>
             <td>Name:</td>
-            <td><input type="text" th:field="*{name}" th:placeholder="${edited_person.name}"/></td>
+            <td><input type="text" th:field="*{name}"/></td>
+        </tr>
+        <tr>
+            <td>ID:</td>
+            <td><input type="text" th:field="*{id}" readonly/></td>
         </tr>
         <tr>
             <td>Victories:</td>
-            <td><input type="number" th:field="*{victories}" th:value="${edited_person.victories}" /></td>
+            <td><input type="number" th:field="*{victories}" /></td>
         </tr>
         <tr>
             <td>Loses:</td>

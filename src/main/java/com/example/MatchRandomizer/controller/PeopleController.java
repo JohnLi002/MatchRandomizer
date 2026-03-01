@@ -87,9 +87,10 @@ public class PeopleController implements WebMvcConfigurer {
 
         Form form = new Form();
         form.setId(ID);
-        //form.setVictories(p.getVictories());
+        form.setVictories(p.getVictories());
+        form.setLoses(p.getLoses());
+        form.setName(p.getName());
         model.addAttribute("form", form);
-        model.addAttribute("edited_person",p);
         return "edit_person";
     }
 

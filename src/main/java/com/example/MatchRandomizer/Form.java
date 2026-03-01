@@ -6,8 +6,7 @@ public class Form {
 
     private int id;
 
-    @NotNull
-    @Size(min=1)
+
     private String name;
 
     private int victories;
