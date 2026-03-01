@@ -1,8 +1,11 @@
 package com.example.MatchRandomizer.controller;
 
 import com.example.MatchRandomizer.Form;
+import com.example.MatchRandomizer.MatchForm;
 import com.example.MatchRandomizer.data.entity.Environment;
+import com.example.MatchRandomizer.data.entity.Match;
 import com.example.MatchRandomizer.service.EnvironmentService;
+import com.example.MatchRandomizer.service.MatchService;
 import com.example.MatchRandomizer.service.PeopleService;
 import com.example.MatchRandomizer.data.entity.Person;
 import jakarta.validation.Valid;
@@ -24,6 +27,11 @@ public class PeopleController implements WebMvcConfigurer {
 
     @Autowired
     private EnvironmentService environmentService;
+
+    @Autowired
+    private MatchService matchService;
+
+    Person[] pair;
 
     @PostMapping("/addPerson")
     public Person postDetails(@RequestBody Person person){
@@ -131,11 +139,21 @@ public class PeopleController implements WebMvcConfigurer {
             return "match_error";
         }
 
-        Person[] pair = peopleService.getPair();
+        pair = peopleService.getPair();
 
         model.addAttribute("Opponent1", pair[0]);
         model.addAttribute("Opponent2", pair[1]);
+        model.addAttribute("Victor", new MatchForm());
 
         return "match_pair";
+    }
+
+    @PostMapping(path="/match")
+    public String addMatch(@ModelAttribute MatchForm winner, BindingResult bindingResult, Model model){
+        matchService.saveDetails(new Match(pair[0],pair[1],winner.getWinner(),winner.getRound()));
+
+        model.addAttribute("form", new Form());
+
+        return "form";
     }
 }

@@ -25,6 +25,13 @@ public class Match {
     @Column(name = "round")
     private int round;
 
+    public Match(Person opp1, Person opp2, Person winner, int i){
+        setPlayer1(opp1);
+        setPlayer2(opp2);
+        setWinner(winner);
+        setRound(i);
+    }
+
     public int getId() {
         return id;
     }

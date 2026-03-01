@@ -6,7 +6,6 @@ public class Form {
 
     private int id;
 
-
     private String name;
 
     private int victories;

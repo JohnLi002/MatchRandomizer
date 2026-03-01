@@ -6,7 +6,30 @@
 </head>
 <body>
 <h1>Result</h1>
-<p th:text="'content: ' + ${Opponent1.name} + ' vs ' + ${Opponent2.name}"></p>
+<form action="#" th:action="@{/match}" th:object="${Victor}" method="post">
+<table>
+    <tr>
+        <td><p th:text="'content: ' + ${Opponent1.name} + ' vs ' + ${Opponent2.name}"></p></td>
+    </tr>
+    <tr>
+        <td>
+        <label for="Winner">Winner:</label>
+        </td>
+        <td>
+            <select id="Winner" th:field="*{winner}">
+                <option th:value="${Opponent1.ID}" th:label="${Opponent1.name}"></option>
+                <option th:value="${Opponent2.ID}" th:label="${Opponent2.name}"></option>
+            </select>
+        </td>
+    </tr>
+    <tr>
+        <td>Round:</td>
+        <td><input type="number" th:field="*{round}"/></td>
+    <tr>
+        <td><button type="submit">Submit</button></td>
+    </tr>
+</table>
+</form>
 <a href="/form">Submit another message</a>
 </body>
 </html>

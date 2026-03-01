@@ -11,6 +11,14 @@ import java.util.List;
 @Service
 public class MatchService {
     @Autowired
-    private MatchRepo peopleRepo;
+    private MatchRepo matchRepo;
+
+    public List<Match> getAllMatches(){
+        return matchRepo.findAll();
+    }
+
+    public void saveDetails(Match m){
+        matchRepo.save(m);
+    }
 
 }
