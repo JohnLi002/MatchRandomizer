@@ -18,15 +18,19 @@ Define Match *
 Contains: Person 1, Person 2, location, who won, who lost *
 Store Matches *
 Display Matches
--Create a method that searches user based on ID
--Create HTML page to display matches
---show people involved with their names
---Round
+-Create a method that searches user based on ID *
+-Create HTML page to display matches *
+--show people involved with their names *
 Edit Matches
 Delete Matches
--Modify deletion of people so that related matches are also deleted
+-Modify deletion of people so that related matches are also deleted *
 --Create a method that searches for all matches that involve a certain ID
--Create a cleaner UI to move between all the different webpages
+--Create a method that deletes all matches that involve a certain ID *
+Create a cleaner UI to move between all the different webpages
+-Create a navigation bar to go to the following:
+--All Matches *
+--All People *
+--Form *
 
 Match
 Person 1: Troy Li
