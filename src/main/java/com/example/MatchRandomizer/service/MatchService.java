@@ -38,4 +38,16 @@ public class MatchService {
         matchRepo.delete(m);
     }
 
+    public void deleteRelatedMatches(int person_id){
+        List<Match> list_of_matches = getAllMatches();
+
+        for(int i = 0; i < list_of_matches.size(); i++) {
+            if (list_of_matches.get(i).getPlayer1ID() == person_id) {
+                deleteMatch(list_of_matches.get(i));
+            } else if (list_of_matches.get(i).getPlayer2ID() == person_id) {
+                deleteMatch(list_of_matches.get(i));
+            }
+        }
+    }
+
 }

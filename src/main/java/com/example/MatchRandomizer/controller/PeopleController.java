@@ -125,6 +125,7 @@ public class PeopleController implements WebMvcConfigurer {
     public String deletePerson(@PathVariable (value = "id") int ID, Model model){
         Person p = peopleService.findPersonByID(ID);
 
+        matchService.deleteRelatedMatches(ID);
         peopleService.deletePerson(p);
 
         List<Person> allPeople = peopleService.getAllPeople();

@@ -75,4 +75,17 @@ public class Match {
     public void setRound(int round) {
         this.round = round;
     }
+
+    public int getPlayer1ID(){
+        return player1.getID();
+    }
+
+    public int getPlayer2ID(){
+        return player2.getID();
+    }
+
+    public int getWinnerID(){
+        return winner.getID();
+    }
+
 }

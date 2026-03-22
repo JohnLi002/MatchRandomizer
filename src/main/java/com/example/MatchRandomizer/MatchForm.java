@@ -1,8 +1,11 @@
 package com.example.MatchRandomizer;
 
+import com.example.MatchRandomizer.data.entity.Match;
 import com.example.MatchRandomizer.data.entity.Person;
+import com.example.MatchRandomizer.service.MatchService;
 
 public class MatchForm {
+    private int id;
     private int player1_id;
     private int player2_id;
     private Person winner;
@@ -10,6 +13,14 @@ public class MatchForm {
 
     public MatchForm(){
         round = 0;
+    }
+
+    public MatchForm(Match m){
+        player1_id = m.getPlayer1ID();
+        player2_id = m.getPlayer2ID();
+        winner = m.getWinner();
+        round = m.getRound();
+        id = m.getId();
     }
 
     public int getPlayer1_id() {
@@ -42,5 +53,13 @@ public class MatchForm {
 
     public void setRound(int round) {
         this.round = round;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 }

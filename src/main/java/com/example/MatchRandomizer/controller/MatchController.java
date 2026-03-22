@@ -82,4 +82,44 @@ public class MatchController implements WebMvcConfigurer {
         model.addAttribute("match_list", match_list);
         return "all_matches";
     }
+
+    @GetMapping(path="/edit_match/{id}")
+    public String editPerson(@PathVariable (value = "id") int ID, Model model){
+        Match m = matchService.findMatch(ID);
+
+        MatchForm mf = new MatchForm(m);
+
+        List<Person> player1_list = peopleService.getOtherPeople(m.getPlayer1ID());
+        List<Person> player2_list = peopleService.getOtherPeople(m.getPlayer2ID());
+        List<Person> winner_list = peopleService.getOtherPeople(m.getWinner());
+        model.addAttribute("player1_list", player1_list);
+        model.addAttribute("player2_list", player2_list);
+        model.addAttribute("winner_list", winner_list);
+        model.addAttribute("MatchForm", mf);
+        return "edit_match";
+    }
+
+    @PostMapping("/edit_match")
+    public String editPersonSubmit(@ModelAttribute MatchForm mf, BindingResult bindingResult, Model model) {
+        Match newMatch = matchService.findMatch(mf.getId());
+        if(mf.getPlayer1_id() != newMatch.getPlayer1ID()){
+            newMatch.setPlayer1(peopleService.findPersonByID(mf.getPlayer1_id()));
+        }
+        if(mf.getPlayer1_id() != newMatch.getPlayer2ID()){
+            newMatch.setPlayer2(peopleService.findPersonByID(mf.getPlayer2_id()));
+        }
+        if(mf.getWinner().getID() != newMatch.getWinnerID()){
+            newMatch.setWinner(mf.getWinner());
+        }
+        if(mf.getRound() != newMatch.getRound()){
+            newMatch.setRound(mf.getRound());
+        }
+
+        matchService.saveDetails(newMatch);
+
+        List<Match> match_list = matchService.getAllMatches();
+
+        model.addAttribute("match_list", match_list);
+        return "all_matches";
+    }
 }

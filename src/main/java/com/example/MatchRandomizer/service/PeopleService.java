@@ -55,6 +55,25 @@ public class PeopleService {
         return p;
     }
 
+    public List<Person> getOtherPeople(int id){
+        List<Person> list_of_people = getAllPeople();
+        Person p = findPersonByID(id);
+        if(list_of_people.remove(p)){
+            list_of_people.add(0, p);
+        }
+
+        return list_of_people;
+    }
+
+    public List<Person> getOtherPeople(Person p){
+        List<Person> list_of_people = getAllPeople();
+        if(list_of_people.remove(p)){
+            list_of_people.add(0, p);
+        }
+
+        return list_of_people;
+    }
+
     public void deletePerson(Person p){
         peopleRepo.delete(p);
     }
