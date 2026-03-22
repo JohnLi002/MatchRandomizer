@@ -1,0 +1,33 @@
+<!DOCTYPE HTML>
+<html xmlns:th="https://www.thymeleaf.org">
+<head>
+    <title>All People</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+<body>
+<h1>List of Matches</h1>
+
+<table class = "table table-striped">
+    <tr>
+        <th>ID</th>
+        <th>Player 1</th>
+        <th>Player 2</th>
+        <th>Round</th>
+        <th>Winner</th>
+        <th>Actions</th>
+    </tr>
+    <tr th:each="match : ${match_list}">
+        <td th:text="${match.id}"></td>
+        <td th:text="${match.player1.name}"></td>
+        <td th:text="${match.player2.name}"></td>
+        <td th:text="${match.round}"></td>
+        <td th:text="${match.winner.name}"></td>
+        <td>
+            <a th:href="@{/delete_match/{id}(id=${match.id})}"><button>Delete</button></a>
+            <a th:href="@{/edit_match/{id}(id=${match.id})}" class="btn btn-primary"><button>Update</button></a>
+        </td>
+    </tr>
+</table>
+<a href="/form">Add new person</a>
+</body>
+</html>

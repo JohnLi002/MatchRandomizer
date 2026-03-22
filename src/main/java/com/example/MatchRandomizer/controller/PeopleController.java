@@ -131,29 +131,4 @@ public class PeopleController implements WebMvcConfigurer {
         model.addAttribute("allPeople", allPeople);
         return "all_people";
     }
-
-
-    @GetMapping(path="/match")
-    public String randomizeMatch(Model model){
-        if(peopleService.getNumberOfPeople() < 2){ //checks to see if there are enough people
-            return "match_error";
-        }
-
-        pair = peopleService.getPair();
-
-        model.addAttribute("Opponent1", pair[0]);
-        model.addAttribute("Opponent2", pair[1]);
-        model.addAttribute("Victor", new MatchForm());
-
-        return "match_pair";
-    }
-
-    @PostMapping(path="/match")
-    public String addMatch(@ModelAttribute MatchForm winner, BindingResult bindingResult, Model model){
-        matchService.saveDetails(new Match(pair[0],pair[1],winner.getWinner(),winner.getRound()));
-
-        model.addAttribute("form", new Form());
-
-        return "form";
-    }
 }
