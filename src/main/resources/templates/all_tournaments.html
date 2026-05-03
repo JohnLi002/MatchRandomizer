@@ -53,8 +53,8 @@
         <td th:text="${tournament.name}"></td>
         <td th:text="${tournament.max_players}"></td>
         <td>
-            <a th:href="@{/delete_tournament/{id}(id=${tournament.id})}"><button>Delete</button></a>
-            <a th:href="@{/edit_tournament/{id}(id=${tournament.id})}"><button>Update</button></a>
+            <a th:href="@{/tournament/{id}/delete(id=${tournament.id})}"><button>Delete</button></a>
+            <a th:href="@{/tournament/{id}/edit(id=${tournament.id})}"><button>Update</button></a>
         </td>
     </tr>
 </table>

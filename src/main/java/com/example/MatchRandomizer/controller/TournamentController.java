@@ -37,7 +37,7 @@ public class TournamentController {
     public String create_tournament_submission(@ModelAttribute @Valid Form form, BindingResult bindingResult, Model model) {
         Tournament t = new Tournament(form.getName(),form.getMax_players());
         tournamentService.saveDetails(t);
-        return "create_tournament";
+        return "redirect:/tournament/all";
     }
 
     @GetMapping("/tournament/all")
@@ -46,6 +46,14 @@ public class TournamentController {
         model.addAttribute("tournament_list", list_of_tournaments);
 
         return "all_tournaments";
+    }
+
+    @GetMapping(path = "/tournament/{id}/edit")
+    public String edit_tournament(@PathVariable(value = "id") int ID, Model model) {
+        List<Match> list_of_matches = matchService.find_related_tournaments(ID);
+        model.addAttribute("match_list", list_of_matches);
+
+        return "edit_tournament";
     }
 
 }

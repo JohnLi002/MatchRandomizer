@@ -107,9 +107,10 @@ public class MatchController implements WebMvcConfigurer {
         if (mf.getPlayer1_id() != newMatch.getPlayer2ID()) {
             newMatch.setPlayer2(peopleService.findPersonByID(mf.getPlayer2_id()));
         }
-        if (mf.getWinner().getID() != newMatch.getWinnerID()) {
-            newMatch.setWinner(mf.getWinner());
-        }
+
+
+        newMatch.setWinner(mf.getWinner());
+
         if (mf.getRound() != newMatch.getRound()) {
             newMatch.setRound(mf.getRound());
         }
@@ -135,10 +136,16 @@ public class MatchController implements WebMvcConfigurer {
     @PostMapping("/match/create")
     public String createMatchSubmit(@ModelAttribute MatchForm mf, BindingResult bindingResult, Model model) {
         if(mf.getPlayer1_id() == mf.getPlayer2_id()){
+            model.addAttribute("error_msg", "User submitted a match duplicate players");
             return "create_match_error";
+        } else if (mf.getWinner().getID() != mf.getPlayer2_id() || mf.getWinner().getID() != mf.getPlayer1_id()){
+            model.addAttribute("error_msg", "User submitted a winner unrelated to the involved players");
+            return "create_match_error";
+
         }
 
         Match newMatch = new Match(peopleService.findPersonByID(mf.getPlayer1_id()),peopleService.findPersonByID(mf.getPlayer2_id()),mf.getRound());
+        newMatch.setWinner(mf.getWinner());
 
         matchService.saveDetails(newMatch);
 
