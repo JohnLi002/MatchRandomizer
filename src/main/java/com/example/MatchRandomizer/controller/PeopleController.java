@@ -31,7 +31,6 @@ public class PeopleController implements WebMvcConfigurer {
     @Autowired
     private MatchService matchService;
 
-    Person[] pair;
 
     @PostMapping("/addPerson")
     public Person postDetails(@RequestBody Person person){

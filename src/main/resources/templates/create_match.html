@@ -39,51 +39,47 @@
 </nav>
 
 <div class="container">
-<h1>Editing Match</h1>
+    <h1>Create Match</h1>
 
 
-<form action="#" th:action="@{/edit_match}" th:object="${MatchForm}" method="post">
-    <table>
-        <tr>
-            <td>ID:</td>
-            <td><input type="text" th:field="*{id}" readonly/></td>
-        </tr>
-
-        <tr>
-            <td>Player 1:</td>
-            <td><select class="form-select" th:field="*{player1_id}">
-                <th:block th:each="player : ${player1_list}">
-                    <option th:value="${player.ID}" th:text="${player.name}"></option>
-                </th:block>
-            </select> </td>
-        </tr>
-        <tr>
-            <td>Player 2:</td>
-            <td><select th:field="*{player2_id}">
-                <th:block th:each="player : ${player2_list}">
-                    <option th:value="${player.ID}" th:text="${player.name}"></option>
-                </th:block>
-            </select> </td>
-        </tr>
-        <tr>
-            <td>Winner:</td>
-            <td><select th:field="*{winner}">
-                <th:block th:each="player : ${winner_list}">
-                    <option th:value="${player.ID}" th:text="${player.name}"></option>
-                </th:block>
-            </select> </td>
-        </tr>
-        <tr>
-            <td>Round:</td>
-            <td><input type="number" th:field="*{round}"/></td>
-        </tr>
+    <form action="#" th:action="@{/match/create}" th:object="${MatchForm}" method="post">
+        <table>
+            <tr>
+                <td>Player 1:</td>
+                <td><select class="form-select" th:field="*{player1_id}">
+                    <th:block th:each="player : ${player_list}">
+                        <option th:value="${player.ID}" th:text="${player.name}"></option>
+                    </th:block>
+                </select> </td>
+            </tr>
+            <tr>
+                <td>Player 2:</td>
+                <td><select class="form-select" th:field="*{player2_id}">
+                    <th:block th:each="player : ${player_list}">
+                        <option th:value="${player.ID}" th:text="${player.name}"></option>
+                    </th:block>
+                </select> </td>
+            </tr>
+            <tr>
+                <td>Winner:</td>
+                <td><select class="form-select" th:field="*{winner}">
+                    <option th:value="-1" selected>N/A</option>
+                    <th:block th:each="player : ${player_list}">
+                        <option th:value="${player.ID}" th:text="${player.name}"></option>
+                    </th:block>
+                </select> </td>
+            </tr>
+            <tr>
+                <td>Round:</td>
+                <td><input type="number" th:field="*{round}"/></td>
+            </tr>
 
 
-        <tr>
-            <td><button type="submit" class="btn btn-primary">Submit</button></td>
-        </tr>
-    </table>
-</form>
+            <tr>
+                <td><button type="submit" class="btn btn-primary">Submit</button></td>
+            </tr>
+        </table>
+    </form>
 </div>
 </body>
 </html>

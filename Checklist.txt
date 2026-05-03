@@ -31,7 +31,40 @@ Create a cleaner UI to move between all the different webpages
 --All Matches *
 --All People *
 --Form *
+--------------------------------------------------------------------------------------------------------------------
+Increment number of victories and losses of people when matches are created
+Update forms to add Person object rather then ID
+Explore Bootstrap and replace part of HTML
+-Changes buttons with bootstrap
+--Use Danger class for delete buttons
+--Use primary for default buttons
+-Change dropdowns with bootstrap
+-Change input text and numbers with bootstrap
+Cleanup HTML
+-Delete unneeded stuff
+-Add padding
+--Do this by adding bootstrap containers
 
+Make naming conventions more consistent (java)
+-ex. instead of people_id make it peopleId
+-change controller paths naming convention
+--ex. /edit_match/{id} -> /match/{id}/edit
+-Database naming convention uses underscore and doesn't need to be changed
+
+Add comments to explain what is going on
+Modify Form class into PeopleForm for better clarity
+
+Add more validation to prevent bugs
+-Make sure the required fields are filled in
+-Make sure the inputs are correct
+-Add indication for required fields
+-Research client side validation (not priority)
+--Involves bootstrap and javascript
+
+
+
+
+Future:
 Match
 Person 1: Troy Li
 Person 2: John Li

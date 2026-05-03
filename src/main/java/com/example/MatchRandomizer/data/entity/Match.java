@@ -36,6 +36,13 @@ public class Match {
         setRound(i);
     }
 
+    public Match(Person opp1, Person opp2, int i){
+        setPlayer1(opp1);
+        setPlayer2(opp2);
+        setRound(i);
+    }
+
+
     public int getId() {
         return id;
     }

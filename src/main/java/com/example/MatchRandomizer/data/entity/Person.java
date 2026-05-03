@@ -19,6 +19,9 @@ public class Person {
     @Column(name = "Loses")
     private int loses;
 
+    @Column(name = "Tournament")
+    private String tournament;
+
     public Person(){
         victories = 0;
         loses = 0;
@@ -59,5 +62,13 @@ public class Person {
     @Override
     public String toString(){
         return name;
+    }
+
+    public String getTournament() {
+        return tournament;
+    }
+
+    public void setTournament(String tournament) {
+        this.tournament = tournament;
     }
 }

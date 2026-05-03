@@ -55,7 +55,7 @@
         <td th:text="${match.player1.name}"></td>
         <td th:text="${match.player2.name}"></td>
         <td th:text="${match.round}"></td>
-        <td th:text="${match.winner.name}"></td>
+        <td th:text="${match.winner} ?: 'N/A'"></td>
         <td>
             <a th:href="@{/delete_match/{id}(id=${match.id})}"><button>Delete</button></a>
             <a th:href="@{/edit_match/{id}(id=${match.id})}"><button>Update</button></a>

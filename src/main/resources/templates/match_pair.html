@@ -50,7 +50,7 @@
         <label for="Winner">Winner:</label>
         </td>
         <td>
-            <select id="Winner" th:field="*{winner_id}">
+            <select id="Winner" th:field="*{winner}">
                 <option th:value="${Opponent1.ID}" th:label="${Opponent1.name}"></option>
                 <option th:value="${Opponent2.ID}" th:label="${Opponent2.name}"></option>
             </select>

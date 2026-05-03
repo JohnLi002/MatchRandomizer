@@ -35,10 +35,9 @@ public class MatchController implements WebMvcConfigurer {
     Person[] pair;
 
 
-
-    @GetMapping(path="/match")
-    public String randomizeMatch(Model model){
-        if(peopleService.getNumberOfPeople() < 2){ //checks to see if there are enough people
+    @GetMapping(path = "/match")
+    public String randomizeMatch(Model model) {
+        if (peopleService.getNumberOfPeople() < 2) { //checks to see if there are enough people
             return "match_error";
         }
 
@@ -54,25 +53,25 @@ public class MatchController implements WebMvcConfigurer {
         return "match_pair";
     }
 
-    @PostMapping(path="/match")
-    public String addMatch(@ModelAttribute MatchForm winner, BindingResult bindingResult, Model model){
-        matchService.saveDetails(new Match(pair[0],pair[1],winner.getWinner(),winner.getRound()));
+    @PostMapping(path = "/match")
+    public String addMatch(@ModelAttribute MatchForm winner, BindingResult bindingResult, Model model) {
+        matchService.saveDetails(new Match(pair[0], pair[1], winner.getWinner(), winner.getRound()));
 
         model.addAttribute("form", new Form());
 
         return "form";
     }
 
-    @GetMapping(path="/all_matches")
-    public String getAllMatches(Model model){
+    @GetMapping(path = "/all_matches")
+    public String getAllMatches(Model model) {
         List<Match> match_list = matchService.getAllMatches();
 
         model.addAttribute("match_list", match_list);
         return "all_matches";
     }
 
-    @GetMapping(path="/delete_match/{id}")
-    public String deleteMatch(@PathVariable (value = "id") int ID, Model model){
+    @GetMapping(path = "/delete_match/{id}")
+    public String deleteMatch(@PathVariable(value = "id") int ID, Model model) {
         Match match_to_be_deleted = matchService.findMatch(ID);
 
         matchService.deleteMatch(match_to_be_deleted);
@@ -83,8 +82,8 @@ public class MatchController implements WebMvcConfigurer {
         return "all_matches";
     }
 
-    @GetMapping(path="/edit_match/{id}")
-    public String editPerson(@PathVariable (value = "id") int ID, Model model){
+    @GetMapping(path = "/edit_match/{id}")
+    public String editPerson(@PathVariable(value = "id") int ID, Model model) {
         Match m = matchService.findMatch(ID);
 
         MatchForm mf = new MatchForm(m);
@@ -102,16 +101,16 @@ public class MatchController implements WebMvcConfigurer {
     @PostMapping("/edit_match")
     public String editPersonSubmit(@ModelAttribute MatchForm mf, BindingResult bindingResult, Model model) {
         Match newMatch = matchService.findMatch(mf.getId());
-        if(mf.getPlayer1_id() != newMatch.getPlayer1ID()){
+        if (mf.getPlayer1_id() != newMatch.getPlayer1ID()) {
             newMatch.setPlayer1(peopleService.findPersonByID(mf.getPlayer1_id()));
         }
-        if(mf.getPlayer1_id() != newMatch.getPlayer2ID()){
+        if (mf.getPlayer1_id() != newMatch.getPlayer2ID()) {
             newMatch.setPlayer2(peopleService.findPersonByID(mf.getPlayer2_id()));
         }
-        if(mf.getWinner().getID() != newMatch.getWinnerID()){
+        if (mf.getWinner().getID() != newMatch.getWinnerID()) {
             newMatch.setWinner(mf.getWinner());
         }
-        if(mf.getRound() != newMatch.getRound()){
+        if (mf.getRound() != newMatch.getRound()) {
             newMatch.setRound(mf.getRound());
         }
 
@@ -122,4 +121,31 @@ public class MatchController implements WebMvcConfigurer {
         model.addAttribute("match_list", match_list);
         return "all_matches";
     }
+
+    @GetMapping(path = "/match/create")
+    public String createMatch(Model model) {
+        List<Person> player_list = peopleService.getAllPeople();
+        model.addAttribute("player_list", player_list);
+        model.addAttribute("MatchForm", new MatchForm());
+
+
+        return "create_match";
+    }
+
+    @PostMapping("/match/create")
+    public String createMatchSubmit(@ModelAttribute MatchForm mf, BindingResult bindingResult, Model model) {
+        if(mf.getPlayer1_id() == mf.getPlayer2_id()){
+            return "create_match_error";
+        }
+
+        Match newMatch = new Match(peopleService.findPersonByID(mf.getPlayer1_id()),peopleService.findPersonByID(mf.getPlayer2_id()),mf.getRound());
+
+        matchService.saveDetails(newMatch);
+
+        List<Match> match_list = matchService.getAllMatches();
+
+        model.addAttribute("match_list", match_list);
+        return "all_matches";
+    }
+
 }

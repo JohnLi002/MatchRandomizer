@@ -58,7 +58,7 @@
         <td th:text="${person.loses}"></td>
         <td th:text="${person.ID}"></td>
         <td>
-            <a th:href="@{/delete_person/{id}(id=${person.ID})}"><button>Delete</button></a>
+            <a th:href="@{/delete_person/{id}(id=${person.ID})}"><button  class="btn btn-danger">Delete</button></a>
             <a th:href="@{/edit_person/{id}(id=${person.ID})}"><button>Update</button></a>
         </td>
     </tr>
