@@ -7,6 +7,7 @@ public class Form {
     private int id;
 
     private String name;
+    private int max_players;
 
     private int victories;
     private int loses;
@@ -41,5 +42,13 @@ public class Form {
 
     public void setLoses(int loses) {
         this.loses = loses;
+    }
+
+    public int getMax_players() {
+        return max_players;
+    }
+
+    public void setMax_players(int max_players) {
+        this.max_players = max_players;
     }
 }

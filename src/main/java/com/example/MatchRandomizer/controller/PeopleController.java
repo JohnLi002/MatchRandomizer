@@ -1,9 +1,7 @@
 package com.example.MatchRandomizer.controller;
 
 import com.example.MatchRandomizer.Form;
-import com.example.MatchRandomizer.MatchForm;
 import com.example.MatchRandomizer.data.entity.Environment;
-import com.example.MatchRandomizer.data.entity.Match;
 import com.example.MatchRandomizer.service.EnvironmentService;
 import com.example.MatchRandomizer.service.MatchService;
 import com.example.MatchRandomizer.service.PeopleService;
@@ -124,7 +122,7 @@ public class PeopleController implements WebMvcConfigurer {
     public String deletePerson(@PathVariable (value = "id") int ID, Model model){
         Person p = peopleService.findPersonByID(ID);
 
-        matchService.deleteRelatedMatches(ID);
+        matchService.delete_Related_Matches(ID);
         peopleService.deletePerson(p);
 
         List<Person> allPeople = peopleService.getAllPeople();

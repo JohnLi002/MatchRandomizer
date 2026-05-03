@@ -1,7 +1,9 @@
 package com.example.MatchRandomizer.service;
 
 import com.example.MatchRandomizer.data.entity.Match;
+import com.example.MatchRandomizer.data.entity.Tournament;
 import com.example.MatchRandomizer.data.repo.MatchRepo;
+import com.example.MatchRandomizer.data.repo.TournamentRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -11,20 +13,20 @@ import java.util.Optional;
 @Service
 public class TournamentService {
     @Autowired
-    private MatchRepo matchRepo;
+    private TournamentRepo tournamentRepo;
 
-    public List<Match> getAllMatches(){
-        List<Match> m = matchRepo.findAll();
+    public List<Tournament> getAllTournaments(){
+        List<Tournament> t = tournamentRepo.findAll();
 
-        return m;
+        return t;
     }
 
-    public void saveDetails(Match m){
-        matchRepo.save(m);
+    public void saveDetails(Tournament t){
+        tournamentRepo.save(t);
     }
 
-    public Match findMatch(int id){
-        Optional<Match> search_result = matchRepo.findById(id);
+    public Tournament findTournament(int id){
+        Optional<Tournament> search_result = tournamentRepo.findById(id);
 
         if(search_result.isPresent()){
             return search_result.get();
@@ -33,20 +35,7 @@ public class TournamentService {
         return null;
     }
 
-    public void deleteMatch(Match m){
-        matchRepo.delete(m);
+    public void deleteTournament(Tournament t){
+        tournamentRepo.delete(t);
     }
-
-    public void deleteRelatedMatches(int person_id){
-        List<Match> list_of_matches = getAllMatches();
-
-        for(int i = 0; i < list_of_matches.size(); i++) {
-            if (list_of_matches.get(i).getPlayer1ID() == person_id) {
-                deleteMatch(list_of_matches.get(i));
-            } else if (list_of_matches.get(i).getPlayer2ID() == person_id) {
-                deleteMatch(list_of_matches.get(i));
-            }
-        }
-    }
-
 }

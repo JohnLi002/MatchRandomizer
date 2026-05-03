@@ -1,7 +1,6 @@
 package com.example.MatchRandomizer.service;
 
 import com.example.MatchRandomizer.data.repo.MatchRepo;
-import com.example.MatchRandomizer.data.repo.PeopleRepo;
 import com.example.MatchRandomizer.data.entity.Match;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -38,7 +37,7 @@ public class MatchService {
         matchRepo.delete(m);
     }
 
-    public void deleteRelatedMatches(int person_id){
+    public void delete_Related_Matches(int person_id){
         List<Match> list_of_matches = getAllMatches();
 
         for(int i = 0; i < list_of_matches.size(); i++) {
@@ -50,4 +49,16 @@ public class MatchService {
         }
     }
 
+    public List<Match> find_related_tournaments(int tournament_id){
+        List<Match> list_of_matches = getAllMatches();
+
+        for(int i = 0; i < list_of_matches.size(); i++) {
+            if (list_of_matches.get(i).getTournament_id().getId() != tournament_id) {
+                list_of_matches.remove(i);
+                i--;
+            }
+        }
+
+        return list_of_matches;
+    }
 }

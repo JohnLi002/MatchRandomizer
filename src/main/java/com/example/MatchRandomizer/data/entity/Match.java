@@ -25,6 +25,10 @@ public class Match {
     @Column(name = "round")
     private int round;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name="tournament_id", referencedColumnName="id")
+    private Tournament tournament_id;
+
     public Match(){
         setRound(0);
     }
@@ -95,4 +99,11 @@ public class Match {
         return winner.getID();
     }
 
+    public Tournament getTournament_id() {
+        return tournament_id;
+    }
+
+    public void setTournament_id(Tournament tournament_id) {
+        this.tournament_id = tournament_id;
+    }
 }
