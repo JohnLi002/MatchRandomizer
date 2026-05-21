@@ -25,6 +25,8 @@ import java.util.List;
 public class TournamentController {
     @Autowired
     private TournamentService tournamentService;
+
+    @Autowired
     private MatchService matchService;
 
     @GetMapping("/tournament/create")
@@ -49,7 +51,7 @@ public class TournamentController {
     }
 
     @GetMapping(path = "/tournament/{id}/edit")
-    public String edit_tournament(@PathVariable(value = "id") int ID, Model model) {
+    public String edit_tournament(@PathVariable (value = "id") int ID, Model model) {
         List<Match> list_of_matches = matchService.find_related_tournaments(ID);
         model.addAttribute("match_list", list_of_matches);
 
