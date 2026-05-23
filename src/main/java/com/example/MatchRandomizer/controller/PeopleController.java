@@ -40,13 +40,13 @@ public class PeopleController implements WebMvcConfigurer {
         registry.addViewController("/results").setViewName("results");
     }
 
-    @GetMapping("/form")
+    @GetMapping("/")
     public String formForm(Model model) {
         model.addAttribute("form", new Form());
         return "form";
     }
 
-    @PostMapping("/form")
+    @PostMapping("/")
     public String formSubmit(@ModelAttribute @Valid Form form, BindingResult bindingResult, Model model) {
         if (bindingResult.hasErrors()) { //checks to make sure the inputting name is valid. Conditions: Not Null + 0< characters
             return "form";

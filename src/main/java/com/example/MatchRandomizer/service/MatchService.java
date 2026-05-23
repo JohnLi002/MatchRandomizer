@@ -5,7 +5,6 @@ import com.example.MatchRandomizer.data.entity.Match;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -54,10 +53,10 @@ public class MatchService {
         List<Match> list_of_matches = getAllMatches();
 
         for(int i = 0; i < list_of_matches.size(); i++) {
-            if(list_of_matches.get(i).getTournament_id() == null) { //check to make sure that the match has an attached tournament
+            if(list_of_matches.get(i).getTournament() == null) { //check to make sure that the match has an attached tournament
                 list_of_matches.remove(i);
                 i--;
-            } else if (list_of_matches.get(i).getTournament_id().getId() != tournament_id) {
+            } else if (list_of_matches.get(i).getTournament().getId() != tournament_id) {
                 list_of_matches.remove(i);
                 i--;
             }

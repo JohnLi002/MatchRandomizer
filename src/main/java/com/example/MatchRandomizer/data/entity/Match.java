@@ -27,7 +27,7 @@ public class Match {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="tournament_id", referencedColumnName="id")
-    private Tournament tournament_id;
+    private Tournament tournament;
 
     public Match(){
         setRound(0);
@@ -99,11 +99,11 @@ public class Match {
         return winner.getID();
     }
 
-    public Tournament getTournament_id() {
-        return tournament_id;
+    public Tournament getTournament() {
+        return tournament;
     }
 
-    public void setTournament_id(Tournament tournament_id) {
-        this.tournament_id = tournament_id;
+    public void setTournament(Tournament tournament) {
+        this.tournament = tournament;
     }
 }

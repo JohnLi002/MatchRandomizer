@@ -58,4 +58,14 @@ public class TournamentController {
         return "edit_tournament";
     }
 
+    @GetMapping(path = "/tournament/{id}/delete")
+    public String delete_tournament(@PathVariable (value = "id") int ID, Model model) {
+        Tournament t = tournamentService.findTournament(ID);
+        tournamentService.deleteTournament(t);
+
+        List<Tournament> tournament_list = tournamentService.getAllTournaments();
+        model.addAttribute("tournament_list", tournament_list);
+
+        return "all_tournaments";
+    }
 }

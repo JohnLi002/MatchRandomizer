@@ -38,7 +38,7 @@ public class MatchController implements WebMvcConfigurer {
     @GetMapping(path = "/match")
     public String randomizeMatch(Model model) {
         if (peopleService.getNumberOfPeople() < 2) { //checks to see if there are enough people
-            return "match_error";
+            return "match_html/match_error";
         }
 
         pair = peopleService.getPair();
@@ -50,7 +50,7 @@ public class MatchController implements WebMvcConfigurer {
         mf.setPlayer2_id(pair[1].getID());
         model.addAttribute("Victor", new MatchForm());
 
-        return "match_pair";
+        return "match_html/match_pair";
     }
 
     @PostMapping(path = "/match")
@@ -67,7 +67,7 @@ public class MatchController implements WebMvcConfigurer {
         List<Match> match_list = matchService.getAllMatches();
 
         model.addAttribute("match_list", match_list);
-        return "all_matches";
+        return "match_html/all_matches";
     }
 
     @GetMapping(path = "/delete_match/{id}")
@@ -79,7 +79,7 @@ public class MatchController implements WebMvcConfigurer {
         List<Match> match_list = matchService.getAllMatches();
 
         model.addAttribute("match_list", match_list);
-        return "all_matches";
+        return "match_html/all_matches";
     }
 
     @GetMapping(path = "/edit_match/{id}")
@@ -95,7 +95,7 @@ public class MatchController implements WebMvcConfigurer {
         model.addAttribute("player2_list", player2_list);
         model.addAttribute("winner_list", winner_list);
         model.addAttribute("MatchForm", mf);
-        return "edit_match";
+        return "match_html/edit_match";
     }
 
     @PostMapping("/edit_match")
@@ -120,7 +120,7 @@ public class MatchController implements WebMvcConfigurer {
         List<Match> match_list = matchService.getAllMatches();
 
         model.addAttribute("match_list", match_list);
-        return "all_matches";
+        return "match_html/all_matches";
     }
 
     @GetMapping(path = "/match/create")
@@ -130,17 +130,17 @@ public class MatchController implements WebMvcConfigurer {
         model.addAttribute("MatchForm", new MatchForm());
 
 
-        return "create_match";
+        return "match_html/create_match";
     }
 
     @PostMapping("/match/create")
     public String createMatchSubmit(@ModelAttribute MatchForm mf, BindingResult bindingResult, Model model) {
         if(mf.getPlayer1_id() == mf.getPlayer2_id()){
             model.addAttribute("error_msg", "User submitted a match duplicate players");
-            return "create_match_error";
+            return "match_html/create_match_error";
         } else if (mf.getWinner().getID() != mf.getPlayer2_id() || mf.getWinner().getID() != mf.getPlayer1_id()){
             model.addAttribute("error_msg", "User submitted a winner unrelated to the involved players");
-            return "create_match_error";
+            return "match_html/create_match_error";
 
         }
 
@@ -152,7 +152,7 @@ public class MatchController implements WebMvcConfigurer {
         List<Match> match_list = matchService.getAllMatches();
 
         model.addAttribute("match_list", match_list);
-        return "all_matches";
+        return "match_html/all_matches";
     }
 
 }

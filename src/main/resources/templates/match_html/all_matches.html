@@ -27,6 +27,7 @@
         <th>Player 2</th>
         <th>Round</th>
         <th>Winner</th>
+        <th>Tournament</th>
         <th>Actions</th>
     </tr>
     <tr th:each="match : ${match_list}">
@@ -35,6 +36,7 @@
         <td th:text="${match.player2.name}"></td>
         <td th:text="${match.round}"></td>
         <td th:text="${match.winner} ?: 'N/A'"></td>
+        <td th:text="${match.tournament} ?: 'N/A'"></td>
         <td>
             <a th:href="@{/delete_match/{id}(id=${match.id})}"><button>Delete</button></a>
             <a th:href="@{/edit_match/{id}(id=${match.id})}"><button>Update</button></a>
