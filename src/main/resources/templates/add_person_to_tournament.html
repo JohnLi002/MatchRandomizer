@@ -1,0 +1,30 @@
+<!DOCTYPE HTML>
+<html xmlns:th="https://www.thymeleaf.org">
+<head>
+    <title>Match Randomizer</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+
+</head>
+<body>
+<!-- Bootstrap JavaScript -->
+
+<div th:replace="~{nav_bar}"></div>
+<h1>Add Person</h1>
+<p th:text="'Add new person to the tournament ' + ${tournament_name}"></p>
+<form action="#" th:action="@{/tournament/{id}/edit/add/player(id=${tournament_id})}" th:object="${Form}" method="post">
+    <table>
+        <tr>
+            <td>Player:</td>
+            <td><select class="form-select" th:field="*{id}">
+                <th:block th:each="player : ${people_list}">
+                    <option th:value="${player.ID}" th:text="${player.name}"></option>
+                </th:block>
+            </select> </td>
+        </tr>
+        <tr>
+            <td><button type="submit" class="btn btn-primary">Submit</button></td>
+        </tr>
+    </table>
+</form>
+</body>
+</html>

@@ -29,6 +29,7 @@
         <th>Wins</th>
         <th>loses</th>
         <th>ID</th>
+        <th>Tournament</th>
         <th>Actions</th>
     </tr>
     <tr th:each="person : ${allPeople}">
@@ -36,9 +37,10 @@
         <td th:text="${person.victories}"></td>
         <td th:text="${person.loses}"></td>
         <td th:text="${person.ID}"></td>
+        <td th:text="${person.tournament} ?: 'N/A'"></td>
         <td>
             <a th:href="@{/delete_person/{id}(id=${person.ID})}"><button  class="btn btn-danger">Delete</button></a>
-            <a th:href="@{/edit_person/{id}(id=${person.ID})}"><button>Update</button></a>
+            <a th:href="@{/edit_person/{id}(id=${person.ID})}"><button class="btn btn-primary">Update</button></a>
         </td>
     </tr>
 </table>

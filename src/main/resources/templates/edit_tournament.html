@@ -1,7 +1,7 @@
 <!DOCTYPE HTML>
 <html xmlns:th="https://www.thymeleaf.org">
 <head>
-    <title>All People</title>
+    <title>Edit Tournament</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css"
@@ -28,9 +28,19 @@
         <th>ID</th>
         <th>Actions</th>
     </tr>
+    <tr th:each="person : ${people_list}">
+        <td th:text="${person.name}"></td>
+        <td th:text="${person.victories}"></td>
+        <td th:text="${person.loses}"></td>
+        <td th:text="${person.ID}"></td>
+        <td>
+            <a th:href="@{/delete_person/{id}(id=${person.ID})}"><button class="btn btn-danger">Delete</button></a>
+            <a th:href="@{/edit_person/{id}(id=${person.ID})}"><button class="btn btn-primary">Update</button></a>
+        </td>
+
 </table>
 
-<a href="/form">Add new person</a>
+<a th:href="@{/tournament/{id}/edit/add/player(id=${tournament_id})}">Add new person</a>
 
 <h1>Matches</h1>
 

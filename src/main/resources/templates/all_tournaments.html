@@ -29,11 +29,11 @@
     </tr>
     <tr th:each="tournament : ${tournament_list}">
         <td th:text="${tournament.id}"></td>
-        <td th:text="${tournament.name}"></td>
+        <td><a th:href="@{/tournament/{id}(id=${tournament.id})}"><p th:text="${tournament.name}"></p></a></td>
         <td th:text="${tournament.max_players}"></td>
         <td>
-            <a th:href="@{/tournament/{id}/delete(id=${tournament.id})}"><button>Delete</button></a>
-            <a th:href="@{/tournament/{id}/edit(id=${tournament.id})}"><button>Update</button></a>
+            <a th:href="@{/tournament/{id}/delete(id=${tournament.id})}"><button class="btn btn-danger">Delete</button></a>
+            <a th:href="@{/tournament/{id}/edit(id=${tournament.id})}"><button class="btn btn-primary">Update</button></a>
         </td>
     </tr>
 </table>

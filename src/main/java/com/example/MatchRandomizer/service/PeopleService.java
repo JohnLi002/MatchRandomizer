@@ -1,5 +1,6 @@
 package com.example.MatchRandomizer.service;
 
+import com.example.MatchRandomizer.data.entity.Match;
 import com.example.MatchRandomizer.data.repo.PeopleRepo;
 import com.example.MatchRandomizer.data.entity.Person;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -77,4 +78,21 @@ public class PeopleService {
     public void deletePerson(Person p){
         peopleRepo.delete(p);
     }
+
+    public List<Person> find_related_tournaments(int tournament_id) {
+        List<Person> list_of_people = getAllPeople();
+
+        for (int i = 0; i < list_of_people.size(); i++) {
+            if (list_of_people.get(i).getTournament() == null) { //check to make sure that the person has an attached tournament
+                list_of_people.remove(i);
+                i--;
+            } else if (list_of_people.get(i).getTournament().getId() != tournament_id) {
+                list_of_people.remove(i);
+                i--;
+            }
+        }
+
+        return list_of_people;
+    }
+
 }

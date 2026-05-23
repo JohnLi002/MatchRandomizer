@@ -19,8 +19,9 @@ public class Person {
     @Column(name = "Loses")
     private int loses;
 
-    @Column(name = "Tournament")
-    private String tournament;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name="tournament_id", referencedColumnName="id")
+    private Tournament tournament;
 
     public Person(){
         victories = 0;
@@ -64,11 +65,11 @@ public class Person {
         return name;
     }
 
-    public String getTournament() {
+    public Tournament getTournament() {
         return tournament;
     }
 
-    public void setTournament(String tournament) {
+    public void setTournament(Tournament tournament) {
         this.tournament = tournament;
     }
 }
