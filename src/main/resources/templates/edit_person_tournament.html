@@ -1,0 +1,51 @@
+<!DOCTYPE HTML>
+<html xmlns:th="https://www.thymeleaf.org">
+<head>
+    <title>Match Randomizer</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css"
+          rel="stylesheet"
+          integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU"
+          crossorigin="anonymous">
+
+</head>
+<body>
+<!-- Bootstrap JavaScript -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-/bQdsTh/da6pkI1MST/rWKFNjaCP5gBSY4sEBT38Q/9RBh9AH40zEOg7Hlq2THRZ"
+        crossorigin="anonymous"></script>
+
+<div th:replace="~{nav_bar}"></div>
+
+
+<h1>Editing Person</h1>
+<p>Input new person </p>
+<p th:text="'Person ID: ' + ${form.id}"></p>
+
+
+<form action="#" th:action="@{/tournament/{tournament_id}/player/{player_id}/edit(tournament_id=${tournament_id}, player_id=${form.id})}" th:object="${form}" method="post">
+    <table>
+        <tr>
+            <td>Name:</td>
+            <td><input type="text" th:field="*{name}"/></td>
+        </tr>
+        <tr>
+            <td>ID:</td>
+            <td><input type="text" th:field="*{id}" readonly/></td>
+        </tr>
+        <tr>
+            <td>Victories:</td>
+            <td><input type="number" th:field="*{victories}" /></td>
+        </tr>
+        <tr>
+            <td>Loses:</td>
+            <td><input type="number" th:field="*{loses}"/></td>
+        </tr>
+        <tr>
+            <td><button type="submit">Submit</button></td>
+        </tr>
+    </table>
+</form>
+</body>
+</html>

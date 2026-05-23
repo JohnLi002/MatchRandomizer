@@ -53,7 +53,7 @@ public class TournamentController {
         return "all_tournaments";
     }
 
-    @GetMapping(path = "/tournament/{id}/edit")
+    @GetMapping(path = "/tournament/{id}")
     public String edit_tournament(@PathVariable (value = "id") int ID, Model model) {
         List<Match> list_of_matches = matchService.find_related_tournaments(ID);
         model.addAttribute("match_list", list_of_matches);
@@ -61,7 +61,7 @@ public class TournamentController {
         model.addAttribute("people_list", peopleService.find_related_tournaments(ID));
 
 
-        return "edit_tournament";
+        return "view_tournament";
     }
 
     @GetMapping(path = "/tournament/{id}/delete")
@@ -98,6 +98,6 @@ public class TournamentController {
         model.addAttribute("tournament_id", ID);
         model.addAttribute("people_list", peopleService.find_related_tournaments(ID));
 
-        return "edit_tournament";
+        return "view_tournament";
     }
 }

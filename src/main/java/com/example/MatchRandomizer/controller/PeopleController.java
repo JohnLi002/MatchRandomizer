@@ -2,6 +2,7 @@ package com.example.MatchRandomizer.controller;
 
 import com.example.MatchRandomizer.Form;
 import com.example.MatchRandomizer.data.entity.Environment;
+import com.example.MatchRandomizer.data.entity.Match;
 import com.example.MatchRandomizer.service.EnvironmentService;
 import com.example.MatchRandomizer.service.MatchService;
 import com.example.MatchRandomizer.service.PeopleService;
@@ -129,4 +130,41 @@ public class PeopleController implements WebMvcConfigurer {
         model.addAttribute("allPeople", allPeople);
         return "all_people";
     }
+
+    @GetMapping(path="/tournament/{tournament_id}/player/{player_id}/edit")
+    public String editPerson_tournament(@PathVariable (value = "tournament_id") int tournament_ID, @PathVariable (value = "player_id") int player_ID, Model model){
+        Person p = peopleService.findPersonByID(player_ID);
+
+        model.addAttribute("tournament_id", tournament_ID);
+
+        Form form = new Form();
+        form.setId(player_ID);
+        form.setVictories(p.getVictories());
+        form.setLoses(p.getLoses());
+        form.setName(p.getName());
+        model.addAttribute("form", form);
+        return "edit_person_tournament";
+    }
+
+    @PostMapping(path="/tournament/{tournament_id}/player/{player_id}/edit")
+    public String editPerson_tournament_submit(@PathVariable (value = "tournament_id") int tournament_ID, @PathVariable (value = "player_id") int player_ID, @ModelAttribute Form form, BindingResult bindingResult, Model model){
+        Person newPerson = peopleService.findPersonByID(form.getId());
+        if(!form.getName().isEmpty()){
+            newPerson.setName(form.getName());
+        }
+        if(form.getLoses() != newPerson.getLoses()){
+            newPerson.setLoses(form.getLoses());
+        }
+        if(form.getVictories() != newPerson.getVictories()){
+            newPerson.setVictories(form.getVictories());
+        }
+
+        List<Match> list_of_matches = matchService.find_related_tournaments(tournament_ID);
+        model.addAttribute("match_list", list_of_matches);
+        model.addAttribute("tournament_id", tournament_ID);
+        model.addAttribute("people_list", peopleService.find_related_tournaments(tournament_ID));
+
+        return "view_tournament";
+    }
+
 }
