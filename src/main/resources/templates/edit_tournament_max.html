@@ -1,0 +1,32 @@
+<!DOCTYPE HTML>
+<html xmlns:th="https://www.thymeleaf.org">
+<head>
+    <title>Match Randomizer</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+
+</head>
+<body>
+<!-- Bootstrap JavaScript -->
+
+<div th:replace="~{nav_bar}"></div>
+<h1 th:text="'Name: ' + ${tournament.name}"></h1>
+<p>Select Max Players</p>
+<form action="#" th:action="@{/tournament/{id}/edit/max(id=${tournament.id})}" th:object="${form}" method="post">
+    <table>
+        <tr>
+            <td>Player 1:</td>
+            <td><select class="form-select" th:field="*{max_players}">
+                <option value="2">2</option>
+                <option value="4">4</option>
+                <option value="8">8</option>
+                <option value="16">16</option>
+                <option value="32">32</option>
+            </select> </td>
+        </tr>
+        <tr>
+            <td><button type="submit">Submit</button></td>
+        </tr>
+    </table>
+</form>
+</body>
+</html>

@@ -54,10 +54,11 @@ public class TournamentController {
     }
 
     @GetMapping(path = "/tournament/{id}")
-    public String edit_tournament(@PathVariable (value = "id") int ID, Model model) {
+    public String view_tournament(@PathVariable (value = "id") int ID, Model model) {
         List<Match> list_of_matches = matchService.find_related_tournaments(ID);
         model.addAttribute("match_list", list_of_matches);
         model.addAttribute("tournament_id", ID);
+        model.addAttribute("tournament", tournamentService.findTournament(ID));
         model.addAttribute("people_list", peopleService.find_related_tournaments(ID));
 
 
@@ -96,6 +97,31 @@ public class TournamentController {
         List<Match> list_of_matches = matchService.find_related_tournaments(ID);
         model.addAttribute("match_list", list_of_matches);
         model.addAttribute("tournament_id", ID);
+        model.addAttribute("people_list", peopleService.find_related_tournaments(ID));
+
+        return "view_tournament";
+    }
+
+    @GetMapping(path = "/tournament/{id}/edit/max")
+    public String edit_max_players(@PathVariable (value = "id") int ID, Model model) {
+        model.addAttribute("tournament_name", tournamentService.findTournament(ID).getName());
+        model.addAttribute("tournament_id", ID);
+        model.addAttribute("tournament", tournamentService.findTournament(ID));
+        model.addAttribute("form", new Form());
+
+        return "edit_tournament_max";
+    }
+
+    @PostMapping(path = "/tournament/{id}/edit/max")
+    public String edit_max_players_submit(@PathVariable (value = "id") int ID, @ModelAttribute Form form, BindingResult bindingResult, Model model) {
+        Tournament t = tournamentService.findTournament(ID);
+        t.setMax_players(form.getMax_players());
+        tournamentService.saveDetails(t);
+
+        List<Match> list_of_matches = matchService.find_related_tournaments(ID);
+        model.addAttribute("match_list", list_of_matches);
+        model.addAttribute("tournament_id", ID);
+        model.addAttribute("tournament", tournamentService.findTournament(ID));
         model.addAttribute("people_list", peopleService.find_related_tournaments(ID));
 
         return "view_tournament";

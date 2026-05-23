@@ -18,6 +18,17 @@
 
 <div th:replace="~{nav_bar}"></div>
 
+<h1 th:text="'Name: ' + ${tournament.name}"></h1>
+
+
+<table>
+    <tr>
+        <th><h3 th:text="'Max Players: ' + ${tournament.max_players}"></h3></th>
+        <th><a th:href="@{/tournament/{id}/edit/max(id=${tournament_id})}"><button class="btn btn-primary">Change</button></a></th>
+    </tr>
+</table>
+
+
 <h1>Players</h1>
 
 <table class = "table table-striped">
@@ -60,10 +71,11 @@
         <td th:text="${match.round}"></td>
         <td th:text="${match.winner} ?: 'N/A'"></td>
         <td>
-            <a th:href="@{/delete_match/{id}(id=${match.id})}"><button>Delete</button></a>
-            <a th:href="@{/edit_match/{id}(id=${match.id})}"><button>Update</button></a>
+            <a th:href="@{/delete_match/{id}(id=${match.id})}"><button class="btn btn-danger">Delete</button></a>
+            <a th:href="@{/edit_match/{id}(id=${match.id})}"><button class="btn btn-primary">Update</button></a>
         </td>
     </tr>
 </table>
+<a th:href="@{/}"><button class="btn btn-primary">Start Round</button></a>
 </body>
 </html>
