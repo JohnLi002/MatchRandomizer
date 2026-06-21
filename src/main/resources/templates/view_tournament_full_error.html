@@ -20,6 +20,9 @@
 
 <h1 th:text="'Name: ' + ${tournament.name}"></h1>
 
+<div class="alert alert-danger" role="alert">
+    There are currently too many players assigned to this tournament. Please remove some or increase the max number of players to be able to add more
+</div>
 
 <table>
     <tr>
@@ -76,11 +79,6 @@
         </td>
     </tr>
 </table>
-
-<h1>Bracket</h1>
-
-<div th:replace="~{${bracket}}"></div>
-
-<a th:href="@{/tournament/{id}/round/start (id=${tournament_id})}"><button class="btn btn-primary">Start Round</button></a>
+<a th:href="@{/}"><button class="btn btn-primary">Start Round</button></a>
 </body>
 </html>

@@ -11,13 +11,17 @@
 <div th:replace="~{nav_bar}"></div>
 <h1 th:text="'Name: ' + ${tournament.name}"></h1>
 <p>Select Max Players</p>
+
+<div class="alert alert-danger" role="alert">
+    There are currently too many players assigned to this tournament. Please remove some before changing the max number of players to something smaller
+</div>
+
 <form action="#" th:action="@{/tournament/{id}/edit/max(id=${tournament.id})}" th:object="${form}" method="post">
     <table>
         <tr th:text="'Current Max Players: ' + ${tournament.max_players}"></tr>
         <tr>
             <td>New Max Player:</td>
             <td><select class="form-select" th:field="*{max_players}">
-                <option value="0">0</option>
                 <option value="2">2</option>
                 <option value="4">4</option>
                 <option value="8">8</option>

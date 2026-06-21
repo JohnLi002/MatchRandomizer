@@ -38,4 +38,8 @@ public class TournamentService {
     public void deleteTournament(Tournament t){
         tournamentRepo.delete(t);
     }
+
+    public int get_max_rounds(Tournament t){
+        return (int) (Math.log(t.getMax_players()) / Math.log(2));
+    }
 }

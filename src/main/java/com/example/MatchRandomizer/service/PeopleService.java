@@ -95,4 +95,7 @@ public class PeopleService {
         return list_of_people;
     }
 
+    public int get_tournament_player_count(int tournament_id){
+        return find_related_tournaments(tournament_id).size();
+    }
 }

@@ -40,11 +40,19 @@ public class Match {
         setRound(i);
     }
 
-    public Match(Person opp1, Person opp2, int i){
+    public Match(Person opp1, Person opp2, int round){
         setPlayer1(opp1);
         setPlayer2(opp2);
-        setRound(i);
+        setRound(round);
     }
+
+    public Match(Person opp1, Person opp2, int round, Tournament t){
+        setPlayer1(opp1);
+        setPlayer2(opp2);
+        setRound(round);
+        setTournament(t);
+    }
+
 
 
     public int getId() {
@@ -105,5 +113,9 @@ public class Match {
 
     public void setTournament(Tournament tournament) {
         this.tournament = tournament;
+    }
+
+    public boolean hasWinner() {
+        return winner != null;
     }
 }
