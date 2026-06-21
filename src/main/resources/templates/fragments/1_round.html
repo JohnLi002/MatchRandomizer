@@ -20,7 +20,7 @@
         <th>Winner</th>
     </tr>
     <tr th:each="match : ${match_list}">
-        <td th:text="${match.player1} + ' vs. ' + ${match.player2} "></td>
+        <td th:text="${match} ?: 'N/A'"></td>
         <td th:text="${match.winner} ?: 'N/A'"></td>
 </table>
 

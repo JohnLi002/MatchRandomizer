@@ -118,4 +118,8 @@ public class Match {
     public boolean hasWinner() {
         return winner != null;
     }
+
+    public String toString(){
+        return player1.getName() + " vs. " + player2.getName();
+    }
 }
