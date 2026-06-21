@@ -7,6 +7,7 @@ import com.example.MatchRandomizer.data.entity.Match;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -67,10 +68,30 @@ public class MatchService {
         return list_of_matches;
     }
 
+    public List<List<Match>> find_related_tournaments_round_separated(int tournament_id, int max_round){
+        List<Match> list_of_matches = find_related_tournaments(tournament_id);
+        List<Match> current_round = new ArrayList<>();
+        List<List<Match>> round_separted_list = new ArrayList<>();
+
+        for(int j = 1; j <=max_round; j++) {
+            for (int i = 0; i < list_of_matches.size(); i++) {
+                if(j == list_of_matches.get(i).getRound()){
+                    current_round.add(list_of_matches.get(i));
+                    list_of_matches.remove(i);
+                    i--;
+                }
+            }
+            round_separted_list.add(current_round);
+            current_round = new ArrayList<>();
+        }
+
+        return round_separted_list;
+    }
+
     public int get_tournament_round(int tournament_id){
         List<Match> list_of_matches = getAllMatches();
 
-        int highest_round = 0;
+        int highest_round = 1;
         int current_round;
 
         for(int i = 0; i < list_of_matches.size(); i++) {

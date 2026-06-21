@@ -2,6 +2,7 @@ package com.example.MatchRandomizer.controller;
 
 import com.example.MatchRandomizer.Form;
 import com.example.MatchRandomizer.MatchForm;
+import com.example.MatchRandomizer.data.bracket_format.Round_List;
 import com.example.MatchRandomizer.data.entity.Environment;
 import com.example.MatchRandomizer.data.entity.Match;
 import com.example.MatchRandomizer.data.entity.Tournament;
@@ -55,12 +56,28 @@ public class TournamentController {
 
     @GetMapping(path = "/tournament/{id}")
     public String view_tournament(@PathVariable (value = "id") int ID, Model model) {
+
+        Tournament t = tournamentService.findTournament(ID);
         List<Match> list_of_matches = matchService.find_related_tournaments(ID);
-        model.addAttribute("match_list", list_of_matches);
         model.addAttribute("tournament_id", ID);
-        model.addAttribute("tournament", tournamentService.findTournament(ID));
+        model.addAttribute("tournament", t);
         model.addAttribute("people_list", peopleService.find_related_tournaments(ID));
-        model.addAttribute("bracket", "fragments/1_round");
+        if(tournamentService.get_max_rounds(t) > 1){
+            List<List<Match>> match_rounds = matchService.find_related_tournaments_round_separated(ID,tournamentService.get_max_rounds(t));
+            while(match_rounds.get(0).size() < 2){
+                match_rounds.get(0).add(null);
+            }
+
+            if(match_rounds.get(1).isEmpty()){
+                match_rounds.get(1).add(null);
+            }
+            model.addAttribute("match_list", list_of_matches);
+            model.addAttribute("round_list", new Round_List(match_rounds.get(0), match_rounds.get(1)));
+            model.addAttribute("bracket", "fragments/2_round");
+        } else {
+            model.addAttribute("match_list", list_of_matches);
+            model.addAttribute("bracket", "fragments/1_round");
+        }
 
         return "view_tournament";
     }
@@ -172,16 +189,15 @@ public class TournamentController {
     @GetMapping(path = "/tournament/{id}/round/start")
     public String start_round(@PathVariable (value = "id") int ID, Model model) {
         Tournament tournament = tournamentService.findTournament(ID);
-        List<Person> players = peopleService.find_related_tournaments(ID);
         if(matchService.completed_current_round(ID)) {
-            matchService.generate_matches(tournament, matchService.get_tournament_round(ID), players);
+            matchService.generate_matches(tournament, matchService.get_tournament_round(ID), peopleService.find_related_tournaments(ID));
         }
 
         List<Match> list_of_matches = matchService.find_related_tournaments(ID);
         model.addAttribute("match_list", list_of_matches);
         model.addAttribute("tournament_id", ID);
         model.addAttribute("tournament", tournament);
-        model.addAttribute("people_list", players);
+        model.addAttribute("people_list", peopleService.find_related_tournaments(ID));
         model.addAttribute("bracket", "fragments/1_round");
 
         return "view_tournament";
