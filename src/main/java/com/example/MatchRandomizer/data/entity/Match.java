@@ -33,6 +33,11 @@ public class Match {
         setRound(0);
     }
 
+    public Match(int round, Tournament t){
+        setRound(round);
+        setTournament(t);
+    }
+
     public Match(Person opp1, Person opp2, Person winner, int i){
         setPlayer1(opp1);
         setPlayer2(opp2);

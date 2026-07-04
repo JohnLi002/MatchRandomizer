@@ -62,14 +62,23 @@
         <th>Player 2</th>
         <th>Round</th>
         <th>Winner</th>
+        <th>Select Winner</th>
         <th>Actions</th>
     </tr>
     <tr th:each="match : ${match_list}">
         <td th:text="${match.id}"></td>
-        <td th:text="${match.player1.name}"></td>
-        <td th:text="${match.player2.name}"></td>
+        <td th:text="${match.player1} ?: 'N/A'"></td>
+        <td th:text="${match.player2} ?: 'N/A'"></td>
         <td th:text="${match.round}"></td>
         <td th:text="${match.winner} ?: 'N/A'"></td>
+        <td>
+            <a th:href="@{/tournament/{id}/match/{match_id}/winner/{winner_id} (id=${tournament_id}, match_id=${match.id}, winner_id=${match.player1?.ID ?: '1'})}">
+                <button class="btn btn-danger" th:text="${match.player1} ?: 'N/A'" th:if="${match.player1 != null}"></button>
+            </a>
+            <a th:href="@{/tournament/{id}/match/{match_id}/winner/{winner_id} (id=${tournament_id}, match_id=${match.id}, winner_id=${match.player2?.ID ?: '1'})}">
+                <button class="btn btn-primary" th:text="${match.player2} ?: 'N/A'" th:if="${match.player2 != null}"></button>
+            </a>
+        </td>
         <td>
             <a th:href="@{/delete_match/{id}(id=${match.id})}"><button class="btn btn-danger">Delete</button></a>
             <a th:href="@{/edit_match/{id}(id=${match.id})}"><button class="btn btn-primary">Update</button></a>
@@ -77,9 +86,9 @@
     </tr>
 </table>
 
-<h1>Bracket</h1>
+ <h1>Bracket</h1>
 
-<div th:replace="~{${bracket}}"></div>
+<!-- <div th:replace="~{${bracket}}"></div> -->
 
 <a th:href="@{/tournament/{id}/round/start (id=${tournament_id})}"><button class="btn btn-primary">Start Round</button></a>
 </body>

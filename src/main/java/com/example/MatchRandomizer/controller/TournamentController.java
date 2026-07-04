@@ -2,13 +2,10 @@ package com.example.MatchRandomizer.controller;
 
 import com.example.MatchRandomizer.Form;
 import com.example.MatchRandomizer.MatchForm;
-import com.example.MatchRandomizer.data.entity.Environment;
-import com.example.MatchRandomizer.data.entity.Match;
-import com.example.MatchRandomizer.data.entity.Tournament;
+import com.example.MatchRandomizer.data.entity.*;
 import com.example.MatchRandomizer.service.EnvironmentService;
 import com.example.MatchRandomizer.service.MatchService;
 import com.example.MatchRandomizer.service.PeopleService;
-import com.example.MatchRandomizer.data.entity.Person;
 import com.example.MatchRandomizer.service.TournamentService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -173,16 +170,48 @@ public class TournamentController {
     public String start_round(@PathVariable (value = "id") int ID, Model model) {
         Tournament tournament = tournamentService.findTournament(ID);
         List<Person> players = peopleService.find_related_tournaments(ID);
-        if(matchService.completed_current_round(ID)) {
-            matchService.generate_matches(tournament, matchService.get_tournament_round(ID), players);
-        }
+
+        int rounds = tournamentService.get_max_rounds(tournament);
+        matchService.generate_all_matches(tournament,rounds,players);
 
         List<Match> list_of_matches = matchService.find_related_tournaments(ID);
         model.addAttribute("match_list", list_of_matches);
         model.addAttribute("tournament_id", ID);
         model.addAttribute("tournament", tournament);
         model.addAttribute("people_list", players);
-        model.addAttribute("bracket", "fragments/1_round");
+        //model.addAttribute("bracket", "fragments/1_round");
+
+        return "view_tournament";
+    }
+
+
+    @GetMapping(path = "/tournament/{id}/match/{match_id}/winner/{winner_id}")
+    public String select_winner(@PathVariable (value = "id") int tournament_id, @PathVariable (value = "match_id") int match_id, @PathVariable (value = "winner_id") int winner_id,Model model) {
+        Tournament tournament = tournamentService.findTournament(tournament_id);
+
+        Match m = matchService.findMatch(match_id);
+        Person winner = peopleService.findPersonByID(winner_id);
+        m.setWinner(winner);
+        matchService.saveDetails(m);
+
+        MatchLink ml = matchService.find_related_match(match_id);
+        if(ml == null){ //catch null to prevent error
+
+        } else if(ml.getMatch1().getId() == match_id){
+            ml.getMain_match().setPlayer1(winner);
+            matchService.saveLink(ml);
+        } else {
+            ml.getMain_match().setPlayer2(winner);
+            matchService.saveLink(ml);
+        }
+
+        List<Match> list_of_matches = matchService.find_related_tournaments(tournament_id);
+        List<Person> players = peopleService.find_related_tournaments(tournament_id);
+        model.addAttribute("match_list", list_of_matches);
+        model.addAttribute("tournament_id", tournament_id);
+        model.addAttribute("tournament", tournament);
+        model.addAttribute("people_list", players);
+        //model.addAttribute("bracket", "fragments/1_round");
 
         return "view_tournament";
     }

@@ -1,12 +1,15 @@
 package com.example.MatchRandomizer.service;
 
+import com.example.MatchRandomizer.data.entity.MatchLink;
 import com.example.MatchRandomizer.data.entity.Person;
 import com.example.MatchRandomizer.data.entity.Tournament;
+import com.example.MatchRandomizer.data.repo.MatchLinkRepo;
 import com.example.MatchRandomizer.data.repo.MatchRepo;
 import com.example.MatchRandomizer.data.entity.Match;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -14,6 +17,10 @@ import java.util.Optional;
 public class MatchService {
     @Autowired
     private MatchRepo matchRepo;
+
+    @Autowired
+    private MatchLinkRepo linkRepo;
+
 
     public List<Match> getAllMatches(){
         List<Match> m = matchRepo.findAll();
@@ -23,6 +30,10 @@ public class MatchService {
 
     public void saveDetails(Match m){
         matchRepo.save(m);
+    }
+
+    public void saveLink(MatchLink ml){
+        linkRepo.save(ml);
     }
 
     public Match findMatch(int id){
@@ -114,5 +125,71 @@ public class MatchService {
             Match m = new Match(player1, player2, round, t);
             saveDetails(m);
         }
+    }
+
+    public void generate_all_matches(Tournament t, int max_round, List<Person> players){
+        Person player1;
+        Person player2;
+        int random_num;
+
+        List<Match> generated_matches = new ArrayList<>();
+
+        while(!players.isEmpty()){
+            random_num  = (int) (Math.random()*players.size());
+            player1 = players.get(random_num);
+            players.remove(player1);
+
+            random_num  = (int) (Math.random()*players.size());
+            player2 = players.get(random_num);
+            players.remove(player2);
+
+            Match m = new Match(player1, player2, 1, t);
+            saveDetails(m);
+            generated_matches.add(m);
+        }
+
+        int j = 0;
+        int limit = generated_matches.size();
+        for(int i = 1; i < max_round; i++){
+
+            for(; j < limit; j+=2){
+                Match m = new Match(i+1, t);
+                saveDetails(m);
+                generated_matches.add(m);
+
+                MatchLink ml = new MatchLink(generated_matches.get(j), generated_matches.get(j+1),m, t);
+                saveLink(ml);
+            }
+            limit = generated_matches.size();
+        }
+    }
+
+    public List<MatchLink> get_related_match_links(Tournament t){
+        List<MatchLink> matchLinks_list = linkRepo.findAll();
+
+        for(int i = 0; i < matchLinks_list.size(); i++) {
+            if(matchLinks_list.get(i).getTournament() == null) { //check to make sure that the match has an attached tournament
+                matchLinks_list.remove(i);
+                i--;
+            } else if (matchLinks_list.get(i).getTournament().getId() != t.getId()) {
+                matchLinks_list.remove(i);
+                i--;
+            }
+        }
+
+        return matchLinks_list;
+
+    }
+
+    public MatchLink find_related_match(int match_id){
+        List<MatchLink> matchLink_list = linkRepo.findAll();
+
+        for(int i = 0; i < matchLink_list.size(); i++) {
+            if(matchLink_list.get(i).getMatch1().getId() == match_id || matchLink_list.get(i).getMatch2().getId() == match_id) {
+                return matchLink_list.get(i);
+            }
+        }
+
+        return null;
     }
 }
