@@ -1,11 +1,8 @@
 package com.example.MatchRandomizer.service;
 
-import com.example.MatchRandomizer.data.entity.MatchLink;
-import com.example.MatchRandomizer.data.entity.Person;
-import com.example.MatchRandomizer.data.entity.Tournament;
+import com.example.MatchRandomizer.data.entity.*;
 import com.example.MatchRandomizer.data.repo.MatchLinkRepo;
 import com.example.MatchRandomizer.data.repo.MatchRepo;
-import com.example.MatchRandomizer.data.entity.Match;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -191,5 +188,56 @@ public class MatchService {
         }
 
         return null;
+    }
+
+    public MatchLink find_related_match_by_main(int match_id){
+        List<MatchLink> matchLink_list = linkRepo.findAll();
+
+        for(int i = 0; i < matchLink_list.size(); i++) {
+            if(matchLink_list.get(i).getMain_match().getId() == match_id) {
+                return matchLink_list.get(i);
+            }
+        }
+
+        return null;
+
+    }
+
+    public MatchDisplay convertToDisplay(Match m){
+        if(m.getPlayer1() == null && m.getPlayer2() == null) {
+            MatchLink ml = find_related_match_by_main(m.getId());
+            return new MatchDisplay("Winner of Match "+ml.getMatch1().getId(),"Winner of Match "+ml.getMatch2().getId(),m);
+        } else if(m.getPlayer1() != null && m.getPlayer2() == null){
+            MatchLink ml = find_related_match_by_main(m.getId());
+            return new MatchDisplay(m.getPlayer1(),"Winner of Match "+ml.getMatch2().getId(),m);
+        } else if(m.getPlayer1() == null && m.getPlayer2() != null){
+            MatchLink ml = find_related_match_by_main(m.getId());
+            return new MatchDisplay("Winner of Match "+ml.getMatch1().getId(),m.getPlayer2(),m);
+        } else if(m.getPlayer1() != null && m.getPlayer2() != null && m.getWinner() == null){
+            MatchLink ml = find_related_match_by_main(m.getId());
+            return new MatchDisplay(m.getPlayer1(),m.getPlayer2(),m);
+        }
+        return new MatchDisplay(m);
+    }
+
+    public List<MatchDisplay> convertListToDisplay(List<Match> ml){
+        List<MatchDisplay> md = new ArrayList<>();
+
+        for(int i = 0; i <  ml.size(); i++){
+            md.add(convertToDisplay(ml.get(i)));
+        }
+
+        return md;
+    }
+
+    public List<MatchDisplay> getAllMatchDisplay(){
+        List<MatchDisplay> md = new ArrayList<>();
+        List<Match> list_of_matches = getAllMatches();
+
+        for(int i = 0; i <  list_of_matches.size(); i++){
+            md.add(convertToDisplay(list_of_matches.get(i)));
+        }
+
+        return md;
     }
 }

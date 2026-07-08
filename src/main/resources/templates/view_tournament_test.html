@@ -1,0 +1,97 @@
+<!DOCTYPE HTML>
+<html xmlns:th="https://www.thymeleaf.org">
+<head>
+    <title>Edit Tournament</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css"
+          rel="stylesheet"
+          integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU"
+          crossorigin="anonymous">
+
+</head>
+<body>
+<!-- Bootstrap JavaScript -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-/bQdsTh/da6pkI1MST/rWKFNjaCP5gBSY4sEBT38Q/9RBh9AH40zEOg7Hlq2THRZ"
+        crossorigin="anonymous"></script>
+
+<div th:replace="~{nav_bar}"></div>
+
+<h1 th:text="'Name: ' + ${tournament.name}"></h1>
+
+
+<table>
+    <tr>
+        <th><h3 th:text="'Max Players: ' + ${tournament.max_players}"></h3></th>
+        <th><a th:href="@{/tournament/{id}/edit/max(id=${tournament_id})}"><button class="btn btn-primary">Change</button></a></th>
+    </tr>
+</table>
+
+
+<h1>Players</h1>
+
+<table class = "table table-striped">
+    <tr>
+        <th>Person's Name</th>
+        <th>Wins</th>
+        <th>loses</th>
+        <th>ID</th>
+        <th>Actions</th>
+    </tr>
+    <tr th:each="person : ${people_list}">
+        <td th:text="${person.name}"></td>
+        <td th:text="${person.victories}"></td>
+        <td th:text="${person.loses}"></td>
+        <td th:text="${person.ID}"></td>
+        <td>
+            <a th:href="@{/tournament/{tournament_id}/player/{player_id}/remove(tournament_id=${tournament_id}, player_id=${person.ID})}"><button class="btn btn-danger">Remove</button></a>
+            <a th:href="@{/tournament/{tournament_id}/player/{player_id}/edit(tournament_id=${tournament_id}, player_id=${person.ID})}"><button class="btn btn-primary">Update</button></a>
+        </td>
+
+</table>
+
+<a th:href="@{/tournament/{id}/edit/add/player(id=${tournament_id})}">Add new person</a>
+
+<h1>Matches</h1>
+
+<table class = "table table-striped">
+    <tr>
+        <th>ID</th>
+        <th>Player 1</th>
+        <th>Player 2</th>
+        <th>Round</th>
+        <th>Winner</th>
+        <th>Select Winner</th>
+        <th>Actions</th>
+    </tr>
+    <tr th:each="match : ${match_list}">
+        <td th:text="${match.match_id}"></td>
+        <td th:text="${match.player1}"></td>
+        <td th:text="${match.player2}"></td>
+        <td th:text="${match.round}"></td>
+        <td th:text="${match.winner} ?: 'N/A'"></td>
+        <td>
+            <a th:href="@{/tournament/{id}/match/{match_id}/winner/{winner_id} (id=${tournament_id}, match_id=${match.match_id}, winner_id=${match.player2_id ?: '1'})}">
+                <button class="btn btn-danger" th:text="${match.player1} ?: 'N/A'" th:if="${match.player1_id != -1 and match.player2_id != -1}"></button>
+            </a>
+            <a th:href="@{/tournament/{id}/match/{match_id}/winner/{winner_id} (id=${tournament_id}, match_id=${match.match_id}, winner_id=${match.player2_id ?: '1'})}">
+                <button class="btn btn-primary" th:text="${match.player2} ?: 'N/A'" th:if="${match.player1_id != -1 and match.player2_id != -1}"></button>
+            </a>
+        </td>
+        <td>
+            <a th:href="@{/delete_match/{id}(id=${match.match_id})}"><button class="btn btn-danger">Delete</button></a>
+            <a th:href="@{/edit_match/{id}(id=${match.match_id})}"><button class="btn btn-primary">Update</button></a>
+        </td>
+    </tr>
+</table>
+
+ <h1>Bracket</h1>
+
+<!-- <div th:replace="~{${bracket}}"></div> -->
+
+<a th:href="@{/tournament/{id}/round/start (id=${tournament_id})}">
+    <button class="btn btn-primary" th:if="${#lists.isEmpty(match_list)}">Start Round</button>
+</a>
+</body>
+</html>

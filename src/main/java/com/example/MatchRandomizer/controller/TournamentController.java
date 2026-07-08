@@ -52,14 +52,16 @@ public class TournamentController {
 
     @GetMapping(path = "/tournament/{id}")
     public String view_tournament(@PathVariable (value = "id") int ID, Model model) {
-        List<Match> list_of_matches = matchService.find_related_tournaments(ID);
+        //List<Match> list_of_matches = matchService.find_related_tournaments(ID);
+        List<MatchDisplay> list_of_matches = matchService.getAllMatchDisplay();
+
         model.addAttribute("match_list", list_of_matches);
         model.addAttribute("tournament_id", ID);
         model.addAttribute("tournament", tournamentService.findTournament(ID));
         model.addAttribute("people_list", peopleService.find_related_tournaments(ID));
         model.addAttribute("bracket", "fragments/1_round");
 
-        return "view_tournament";
+        return "view_tournament_test";
     }
 
     @GetMapping(path = "/tournament/{id}/delete")
@@ -104,14 +106,16 @@ public class TournamentController {
         p.setTournament(t);
         peopleService.saveDetails(p);
 
-        List<Match> list_of_matches = matchService.find_related_tournaments(ID);
+        //List<Match> list_of_matches = matchService.find_related_tournaments(ID);
+        List<MatchDisplay> list_of_matches = matchService.getAllMatchDisplay();
+
         model.addAttribute("match_list", list_of_matches);
         model.addAttribute("tournament_id", ID);
         model.addAttribute("tournament", t);
         model.addAttribute("people_list", peopleService.find_related_tournaments(ID));
         model.addAttribute("bracket", "fragments/1_round");
 
-        return "view_tournament";
+        return "view_tournament_test";
     }
 
     @GetMapping(path = "/tournament/{id}/edit/max")
@@ -138,14 +142,16 @@ public class TournamentController {
         t.setMax_players(form.getMax_players());
         tournamentService.saveDetails(t);
 
-        List<Match> list_of_matches = matchService.find_related_tournaments(ID);
+        //List<Match> list_of_matches = matchService.find_related_tournaments(ID);
+        List<MatchDisplay> list_of_matches = matchService.getAllMatchDisplay();
+
         model.addAttribute("match_list", list_of_matches);
         model.addAttribute("tournament_id", ID);
         model.addAttribute("tournament", tournamentService.findTournament(ID));
         model.addAttribute("people_list", peopleService.find_related_tournaments(ID));
         model.addAttribute("bracket", "fragments/1_round");
 
-        return "view_tournament";
+        return "view_tournament_test";
     }
 
     @GetMapping(path = "/tournament/{id}/player/{player_id}/remove")
@@ -154,14 +160,15 @@ public class TournamentController {
         p.setTournament(null);
         peopleService.saveDetails(p);
 
-        List<Match> list_of_matches = matchService.find_related_tournaments(ID);
+        //List<Match> list_of_matches = matchService.find_related_tournaments(ID);
+        List<MatchDisplay> list_of_matches = matchService.getAllMatchDisplay();
         model.addAttribute("match_list", list_of_matches);
         model.addAttribute("tournament_id", ID);
         model.addAttribute("tournament", tournamentService.findTournament(ID));
         model.addAttribute("people_list", peopleService.find_related_tournaments(ID));
         model.addAttribute("bracket", "fragments/1_round");
 
-        return "view_tournament";
+        return "view_tournament_test";
     }
 
 
@@ -174,14 +181,15 @@ public class TournamentController {
         int rounds = tournamentService.get_max_rounds(tournament);
         matchService.generate_all_matches(tournament,rounds,players);
 
-        List<Match> list_of_matches = matchService.find_related_tournaments(ID);
+        //List<Match> list_of_matches = matchService.find_related_tournaments(ID);
+        List<MatchDisplay> list_of_matches = matchService.getAllMatchDisplay();
         model.addAttribute("match_list", list_of_matches);
         model.addAttribute("tournament_id", ID);
         model.addAttribute("tournament", tournament);
         model.addAttribute("people_list", players);
         //model.addAttribute("bracket", "fragments/1_round");
 
-        return "view_tournament";
+        return "view_tournament_test";
     }
 
 
@@ -205,7 +213,9 @@ public class TournamentController {
             matchService.saveLink(ml);
         }
 
-        List<Match> list_of_matches = matchService.find_related_tournaments(tournament_id);
+        //List<Match> list_of_matches = matchService.find_related_tournaments(tournament_id);
+        List<MatchDisplay> list_of_matches = matchService.getAllMatchDisplay();
+
         List<Person> players = peopleService.find_related_tournaments(tournament_id);
         model.addAttribute("match_list", list_of_matches);
         model.addAttribute("tournament_id", tournament_id);
@@ -213,7 +223,7 @@ public class TournamentController {
         model.addAttribute("people_list", players);
         //model.addAttribute("bracket", "fragments/1_round");
 
-        return "view_tournament";
+        return "view_tournament_test";
     }
 
 }
