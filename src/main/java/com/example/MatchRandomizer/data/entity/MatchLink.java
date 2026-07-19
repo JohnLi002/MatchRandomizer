@@ -47,12 +47,20 @@ public class MatchLink {
         return match1;
     }
 
+    public int getMatch1_id(){
+        return match1.getId();
+    }
+
     public void setMatch1(Match match1) {
         this.match1 = match1;
     }
 
     public Match getMatch2() {
         return match2;
+    }
+
+    public int getMatch2_id(){
+        return match2.getId();
     }
 
     public void setMatch2(Match match2) {

@@ -98,4 +98,15 @@ public class PeopleService {
     public int get_tournament_player_count(int tournament_id){
         return find_related_tournaments(tournament_id).size();
     }
+
+    public void remove_tournament(int tournament_id){
+        List<Person> list_of_people = getAllPeople();
+
+        for(int i = 0; i < list_of_people.size(); i++){
+            if(list_of_people.get(i).getTournament().getId() == tournament_id){
+                list_of_people.get(i).setTournament(null);
+                saveDetails(list_of_people.get(i));
+            }
+        }
+    }
 }

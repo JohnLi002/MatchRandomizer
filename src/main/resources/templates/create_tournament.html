@@ -27,9 +27,17 @@
             <td><input type="text" th:field="*{name}" /></td>
         </tr>
         <tr>
-            <td>Max Players:</td>
-            <td><input type="number" th:field="*{max_players}" /></td>
+            <td>Max Player:</td>
+            <td><select class="form-select" th:field="*{max_players}">
+                <option value="0">0</option>
+                <option value="2">2</option>
+                <option value="4">4</option>
+                <option value="8">8</option>
+                <option value="16">16</option>
+                <option value="32">32</option>
+            </select> </td>
         </tr>
+
         <tr>
             <td><button type="submit">Submit</button></td>
         </tr>

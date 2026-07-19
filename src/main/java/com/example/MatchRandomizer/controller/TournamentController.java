@@ -1,9 +1,7 @@
 package com.example.MatchRandomizer.controller;
 
 import com.example.MatchRandomizer.Form;
-import com.example.MatchRandomizer.MatchForm;
 import com.example.MatchRandomizer.data.entity.*;
-import com.example.MatchRandomizer.service.EnvironmentService;
 import com.example.MatchRandomizer.service.MatchService;
 import com.example.MatchRandomizer.service.PeopleService;
 import com.example.MatchRandomizer.service.TournamentService;
@@ -13,8 +11,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
-import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 import java.util.List;
 
@@ -53,7 +49,7 @@ public class TournamentController {
     @GetMapping(path = "/tournament/{id}")
     public String view_tournament(@PathVariable (value = "id") int ID, Model model) {
         //List<Match> list_of_matches = matchService.find_related_tournaments(ID);
-        List<MatchDisplay> list_of_matches = matchService.getAllMatchDisplay();
+        List<MatchDisplay> list_of_matches = matchService.get_organized_tournament_match_display(ID);
 
         model.addAttribute("match_list", list_of_matches);
         model.addAttribute("tournament_id", ID);
@@ -67,6 +63,8 @@ public class TournamentController {
     @GetMapping(path = "/tournament/{id}/delete")
     public String delete_tournament(@PathVariable (value = "id") int ID, Model model) {
         Tournament t = tournamentService.findTournament(ID);
+        matchService.delete_tournament_matches(t.getId());
+        peopleService.remove_tournament(t.getId());
         tournamentService.deleteTournament(t);
 
         List<Tournament> tournament_list = tournamentService.getAllTournaments();
@@ -107,7 +105,7 @@ public class TournamentController {
         peopleService.saveDetails(p);
 
         //List<Match> list_of_matches = matchService.find_related_tournaments(ID);
-        List<MatchDisplay> list_of_matches = matchService.getAllMatchDisplay();
+        List<MatchDisplay> list_of_matches = matchService.get_organized_tournament_match_display(ID);
 
         model.addAttribute("match_list", list_of_matches);
         model.addAttribute("tournament_id", ID);
@@ -143,7 +141,7 @@ public class TournamentController {
         tournamentService.saveDetails(t);
 
         //List<Match> list_of_matches = matchService.find_related_tournaments(ID);
-        List<MatchDisplay> list_of_matches = matchService.getAllMatchDisplay();
+        List<MatchDisplay> list_of_matches = matchService.get_organized_tournament_match_display(ID);
 
         model.addAttribute("match_list", list_of_matches);
         model.addAttribute("tournament_id", ID);
@@ -161,7 +159,7 @@ public class TournamentController {
         peopleService.saveDetails(p);
 
         //List<Match> list_of_matches = matchService.find_related_tournaments(ID);
-        List<MatchDisplay> list_of_matches = matchService.getAllMatchDisplay();
+        List<MatchDisplay> list_of_matches = matchService.get_organized_tournament_match_display(ID);
         model.addAttribute("match_list", list_of_matches);
         model.addAttribute("tournament_id", ID);
         model.addAttribute("tournament", tournamentService.findTournament(ID));
@@ -182,7 +180,7 @@ public class TournamentController {
         matchService.generate_all_matches(tournament,rounds,players);
 
         //List<Match> list_of_matches = matchService.find_related_tournaments(ID);
-        List<MatchDisplay> list_of_matches = matchService.getAllMatchDisplay();
+        List<MatchDisplay> list_of_matches = matchService.get_organized_tournament_match_display(ID);
         model.addAttribute("match_list", list_of_matches);
         model.addAttribute("tournament_id", ID);
         model.addAttribute("tournament", tournament);
@@ -214,7 +212,7 @@ public class TournamentController {
         }
 
         //List<Match> list_of_matches = matchService.find_related_tournaments(tournament_id);
-        List<MatchDisplay> list_of_matches = matchService.getAllMatchDisplay();
+        List<MatchDisplay> list_of_matches = matchService.get_organized_tournament_match_display(tournament_id);
 
         List<Person> players = peopleService.find_related_tournaments(tournament_id);
         model.addAttribute("match_list", list_of_matches);

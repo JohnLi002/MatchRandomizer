@@ -6,9 +6,7 @@ import com.example.MatchRandomizer.data.repo.MatchRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @Service
 public class MatchService {
@@ -23,6 +21,12 @@ public class MatchService {
         List<Match> m = matchRepo.findAll();
 
         return m;
+    }
+
+    public List<MatchLink> getAllMatchLinks(){
+        List<MatchLink> ml = linkRepo.findAll();
+
+        return ml;
     }
 
     public void saveDetails(Match m){
@@ -44,6 +48,7 @@ public class MatchService {
     }
 
     public void deleteMatch(Match m){
+        delete_related_match_links(m);
         matchRepo.delete(m);
     }
 
@@ -54,6 +59,17 @@ public class MatchService {
             if (list_of_matches.get(i).getPlayer1ID() == person_id) {
                 deleteMatch(list_of_matches.get(i));
             } else if (list_of_matches.get(i).getPlayer2ID() == person_id) {
+                deleteMatch(list_of_matches.get(i));
+            }
+        }
+    }
+
+    public void delete_tournament_matches(int tournament_id){
+        List<Match> list_of_matches = getAllMatches();
+
+        for(int i = 0; i < list_of_matches.size(); i++) {
+            if (list_of_matches.get(i).getTournament().getId() == tournament_id) {
+                delete_related_match_links(list_of_matches.get(i));
                 deleteMatch(list_of_matches.get(i));
             }
         }
@@ -178,6 +194,22 @@ public class MatchService {
 
     }
 
+    public void delete_related_match_links(Match m){
+        List<MatchLink> matchLinks_list = getAllMatchLinks();
+
+        for(int i = 0; i < matchLinks_list.size(); i++) {
+            if (matchLinks_list.get(i).getMatch1().getId() == m.getId()
+                    || matchLinks_list.get(i).getMatch2().getId() == m.getId()
+                    || matchLinks_list.get(i).getMain_match().getId() == m.getId()) {
+                delete_match_link(matchLinks_list.get(i));
+            }
+        }
+    }
+
+    public void delete_match_link(MatchLink ml){
+        linkRepo.delete(ml);
+    }
+
     public MatchLink find_related_match(int match_id){
         List<MatchLink> matchLink_list = linkRepo.findAll();
 
@@ -239,5 +271,56 @@ public class MatchService {
         }
 
         return md;
+    }
+
+    public List<MatchDisplay> get_all_organized_match_display(){
+        List<MatchDisplay> md = new ArrayList<>();
+        List<Match> list_of_matches = organize_by_id(getAllMatches());
+
+        for(int i = 0; i <  list_of_matches.size(); i++){
+            md.add(convertToDisplay(list_of_matches.get(i)));
+        }
+
+        return md;
+    }
+
+    public List<MatchDisplay> get_organized_tournament_match_display(int tournament_id) {
+        List<Match> list_of_matches = organize_by_id(find_related_tournaments(tournament_id));
+        List<MatchDisplay> md = convertListToDisplay(list_of_matches);
+
+        return md;
+    }
+
+
+    public List<Match> organize_by_round(List<Match> ml, int rounds){
+        List<Match> organized_list = new ArrayList<>();
+
+        for(int i = 1; i <= rounds; i++){
+            for(int j = 0; j < ml.size(); j++){
+                if(ml.get(j).getRound() == i){
+                    organized_list.add(ml.get(j));
+                }
+            }
+        }
+        return organized_list;
+    }
+
+    public List<Match> organize_by_id(List<Match> ml){
+        int i, j;
+        boolean swapped = false;
+        for(i = 0; i < ml.size() -1 ; i++){
+            for(j = 0; j < ml.size() - i - 1; j++){
+                if(ml.get(j).getId() > ml.get(j+1).getId()){
+                    Collections.swap(ml, j, j+1);
+                    swapped = true;
+                }
+            }
+            if(!swapped){
+                break;
+            }
+            swapped = false;
+
+        }
+        return ml;
     }
 }
