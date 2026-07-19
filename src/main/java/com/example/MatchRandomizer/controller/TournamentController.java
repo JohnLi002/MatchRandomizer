@@ -12,6 +12,7 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -51,13 +52,19 @@ public class TournamentController {
         //List<Match> list_of_matches = matchService.find_related_tournaments(ID);
         List<MatchDisplay> list_of_matches = matchService.get_organized_tournament_match_display(ID);
 
+        int rounds = matchService.get_tournament_round(ID);
+        if(rounds == 1){
+            model.addAttribute("bracket", "fragments/bracket/1_round.html");
+        } else {
+            model.addAttribute("bracket", "fragments/bracket/2_round.html");
+        }
+
         model.addAttribute("match_list", list_of_matches);
         model.addAttribute("tournament_id", ID);
         model.addAttribute("tournament", tournamentService.findTournament(ID));
         model.addAttribute("people_list", peopleService.find_related_tournaments(ID));
-        model.addAttribute("bracket", "fragments/1_round");
 
-        return "view_tournament_test";
+        return "view_tournament";
     }
 
     @GetMapping(path = "/tournament/{id}/delete")
@@ -111,9 +118,9 @@ public class TournamentController {
         model.addAttribute("tournament_id", ID);
         model.addAttribute("tournament", t);
         model.addAttribute("people_list", peopleService.find_related_tournaments(ID));
-        model.addAttribute("bracket", "fragments/1_round");
+        model.addAttribute("bracket", "fragments/bracket/2_round");
 
-        return "view_tournament_test";
+        return "view_tournament";
     }
 
     @GetMapping(path = "/tournament/{id}/edit/max")
@@ -147,9 +154,9 @@ public class TournamentController {
         model.addAttribute("tournament_id", ID);
         model.addAttribute("tournament", tournamentService.findTournament(ID));
         model.addAttribute("people_list", peopleService.find_related_tournaments(ID));
-        model.addAttribute("bracket", "fragments/1_round");
+        model.addAttribute("bracket", "fragments/bracket/2_round");
 
-        return "view_tournament_test";
+        return "view_tournament";
     }
 
     @GetMapping(path = "/tournament/{id}/player/{player_id}/remove")
@@ -164,9 +171,9 @@ public class TournamentController {
         model.addAttribute("tournament_id", ID);
         model.addAttribute("tournament", tournamentService.findTournament(ID));
         model.addAttribute("people_list", peopleService.find_related_tournaments(ID));
-        model.addAttribute("bracket", "fragments/1_round");
+        model.addAttribute("bracket", "fragments/bracket/2_round");
 
-        return "view_tournament_test";
+        return "view_tournament";
     }
 
 
@@ -185,9 +192,9 @@ public class TournamentController {
         model.addAttribute("tournament_id", ID);
         model.addAttribute("tournament", tournament);
         model.addAttribute("people_list", players);
-        //model.addAttribute("bracket", "fragments/1_round");
+        model.addAttribute("bracket", "fragments/bracket/2_round");
 
-        return "view_tournament_test";
+        return "view_tournament";
     }
 
 
@@ -198,6 +205,15 @@ public class TournamentController {
         Match m = matchService.findMatch(match_id);
         Person winner = peopleService.findPersonByID(winner_id);
         m.setWinner(winner);
+
+        if(m.getPlayer1().getID()==winner_id){
+            m.getPlayer1().increaseVictories();
+            m.getPlayer2().increaseLoses();
+        } else {
+            m.getPlayer2().increaseVictories();
+            m.getPlayer1().increaseLoses();
+        }
+
         matchService.saveDetails(m);
 
         MatchLink ml = matchService.find_related_match(match_id);
@@ -219,9 +235,9 @@ public class TournamentController {
         model.addAttribute("tournament_id", tournament_id);
         model.addAttribute("tournament", tournament);
         model.addAttribute("people_list", players);
-        //model.addAttribute("bracket", "fragments/1_round");
+        model.addAttribute("bracket", "fragments/bracket/2_round");
 
-        return "view_tournament_test";
+        return "view_tournament";
     }
 
 }

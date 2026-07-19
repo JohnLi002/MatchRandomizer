@@ -92,7 +92,7 @@ public class MatchService {
     }
 
     public int get_tournament_round(int tournament_id){
-        List<Match> list_of_matches = getAllMatches();
+        List<Match> list_of_matches = find_related_tournaments(tournament_id);
 
         int highest_round = 0;
         int current_round;

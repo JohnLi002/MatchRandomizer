@@ -72,4 +72,12 @@ public class Person {
     public void setTournament(Tournament tournament) {
         this.tournament = tournament;
     }
+
+    public void increaseVictories(){
+        victories += 1;
+    }
+
+    public void increaseLoses(){
+        loses += 1;
+    }
 }

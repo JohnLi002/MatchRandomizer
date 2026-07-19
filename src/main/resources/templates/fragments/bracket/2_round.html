@@ -14,14 +14,28 @@
         integrity="sha384-/bQdsTh/da6pkI1MST/rWKFNjaCP5gBSY4sEBT38Q/9RBh9AH40zEOg7Hlq2THRZ"
         crossorigin="anonymous"></script>
 
+
+<h1>Bracket</h1>
 <table class = "table table-bordered">
     <tr>
         <th>Round 1</th>
+        <th>Round 2</th>
         <th>Winner</th>
     </tr>
-    <tr th:each="match : ${match_list}">
-        <td th:text="${match.player1} + ' vs. ' + ${match.player2} "></td>
-        <td th:text="${match.winner} ?: 'N/A'"></td>
+    <tr>
+        <td>
+            <table class = "table table-bordered">
+                <tr style="height:50px" th:each="match : ${match_list}">
+                    <td th:text="${match.player1} + ' vs. ' + ${match.player2} "></td>
+            </table>
+        </td>
+        <td>
+            <table class = "table table-bordered">
+                <tr style="height:100px" th:each="match : ${match_list}">
+                    <td th:text="${match.player1} + ' vs. ' + ${match.player2} "></td>
+            </table>
+        </td>
+    </tr>
 </table>
 
 
