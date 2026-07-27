@@ -155,4 +155,11 @@ public class MatchController implements WebMvcConfigurer {
         return "match_html/all_matches";
     }
 
+    @GetMapping(path = "/test")
+    public String test(Model model) {
+
+        return "test";
+    }
+
+
 }

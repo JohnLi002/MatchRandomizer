@@ -48,8 +48,12 @@
         <td th:text="${person.loses}"></td>
         <td th:text="${person.ID}"></td>
         <td>
-            <a th:href="@{/tournament/{tournament_id}/player/{player_id}/remove(tournament_id=${tournament_id}, player_id=${person.ID})}"><button class="btn btn-danger">Remove</button></a>
-            <a th:href="@{/tournament/{tournament_id}/player/{player_id}/edit(tournament_id=${tournament_id}, player_id=${person.ID})}"><button class="btn btn-primary">Update</button></a>
+            <a th:href="@{/tournament/{tournament_id}/player/{player_id}/remove(tournament_id=${tournament_id}, player_id=${person.ID})}">
+                <button class="btn btn-danger">Remove</button>
+            </a>
+            <a th:href="@{/tournament/{tournament_id}/player/{player_id}/edit(tournament_id=${tournament_id}, player_id=${person.ID})}">
+                <button class="btn btn-primary">Update</button>
+            </a>
         </td>
 
 </table>
