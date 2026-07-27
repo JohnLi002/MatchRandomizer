@@ -69,20 +69,34 @@
         <th>Player 2</th>
         <th>Round</th>
         <th>Winner</th>
+        <th>Select Winner</th>
         <th>Actions</th>
     </tr>
     <tr th:each="match : ${match_list}">
-        <td th:text="${match.id}"></td>
-        <td th:text="${match.player1.name}"></td>
-        <td th:text="${match.player2.name}"></td>
+        <td th:text="${match.match_id}"></td>
+        <td th:text="${match.player1}"></td>
+        <td th:text="${match.player2}"></td>
         <td th:text="${match.round}"></td>
         <td th:text="${match.winner} ?: 'N/A'"></td>
         <td>
-            <a th:href="@{/delete_match/{id}(id=${match.id})}"><button class="btn btn-danger">Delete</button></a>
-            <a th:href="@{/edit_match/{id}(id=${match.id})}"><button class="btn btn-primary">Update</button></a>
+            <a th:href="@{/tournament/{id}/match/{match_id}/winner/{winner_id} (id=${tournament_id}, match_id=${match.match_id}, winner_id=${match.player1_id ?: '1'})}">
+                <button class="btn btn-danger" th:text="${match.player1} ?: 'N/A'" th:if="${match.player1_id != -1 and match.player2_id != -1}"></button>
+            </a>
+            <a th:href="@{/tournament/{id}/match/{match_id}/winner/{winner_id} (id=${tournament_id}, match_id=${match.match_id}, winner_id=${match.player2_id ?: '1'})}">
+                <button class="btn btn-primary" th:text="${match.player2} ?: 'N/A'" th:if="${match.player1_id != -1 and match.player2_id != -1}"></button>
+            </a>
+        </td>
+        <td>
+            <a th:href="@{/delete_match/{id}(id=${match.match_id})}"><button class="btn btn-danger">Delete</button></a>
+            <a th:href="@{/edit_match/{id}(id=${match.match_id})}"><button class="btn btn-primary">Update</button></a>
         </td>
     </tr>
 </table>
-<a th:href="@{/}"><button class="btn btn-primary">Start Round</button></a>
+
+<div th:replace="~{${bracket}}"></div>
+
+<a th:href="@{/tournament/{id}/round/start (id=${tournament_id})}">
+    <button class="btn btn-primary" th:if="${#lists.isEmpty(match_list)}">Start Round</button>
+</a>
 </body>
 </html>

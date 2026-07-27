@@ -18,9 +18,10 @@
 <h1>Bracket</h1>
 <table class = "table table-bordered">
     <tr>
-        <th>Round 1</th>
-        <th>Winner</th>
+        <th style="text-align: center;">Round 1</th>
+        <th style="text-align: center;">Winner</th>
     </tr>
+    <br/>
     <tr th:each="match : ${match_list}">
         <td>
             <div class="container text-center">
@@ -28,6 +29,7 @@
                     <div class="col align-self-center">
                         <div class="card">
                             <span>
+                                <u><p th:text="'Match ID: ' + ${match.match_id}"></p></u>
                                 <p th:text="${match.player1}" th:style="${match.player1_id == match.winner_id} ? 'color: green;'"></p>
                                 <br/>
                                 <p th:text="${match.player2}" th:style="${match.player2_id == match.winner_id} ? 'color: green;'"></p>

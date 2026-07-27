@@ -54,9 +54,38 @@ public class TournamentController {
 
         int rounds = matchService.get_tournament_round(ID);
         if(rounds == 1){
-            model.addAttribute("bracket", "fragments/bracket/1_round.html");
+            model.addAttribute("bracket", "fragments/bracket/2_player_bracket.html");
+        } else if(rounds == 2) {
+            List<MatchDisplay> round1_list = new ArrayList<>();
+            List<MatchDisplay> round2_list = new ArrayList<>();
+            for(int i = 0; i < list_of_matches.size(); i++){
+                if(list_of_matches.get(i).getRound() == 1){
+                    round1_list.add(list_of_matches.get(i));
+                } else{
+                    round2_list.add(list_of_matches.get(i));
+                }
+            }
+            model.addAttribute("round1_list", round1_list);
+            model.addAttribute("round2_list", round2_list);
+            model.addAttribute("bracket", "fragments/bracket/4_player_bracket.html");
         } else {
-            model.addAttribute("bracket", "fragments/bracket/2_round.html");
+            List<MatchDisplay> round1_list = new ArrayList<>();
+            List<MatchDisplay> round2_list = new ArrayList<>();
+            List<MatchDisplay> round3_list = new ArrayList<>();
+            for(int i = 0; i < list_of_matches.size(); i++){
+                if(list_of_matches.get(i).getRound() == 1){
+                    round1_list.add(list_of_matches.get(i));
+                } else if (list_of_matches.get(i).getRound() == 2){
+                    round2_list.add(list_of_matches.get(i));
+                } else {
+                    round3_list.add(list_of_matches.get(i));
+                }
+            }
+            model.addAttribute("round1_list", round1_list);
+            model.addAttribute("round2_list", round2_list);
+            model.addAttribute("round3_list", round3_list);
+            model.addAttribute("bracket", "fragments/bracket/8_player_bracket.html");
+
         }
 
         model.addAttribute("match_list", list_of_matches);
@@ -114,11 +143,46 @@ public class TournamentController {
         //List<Match> list_of_matches = matchService.find_related_tournaments(ID);
         List<MatchDisplay> list_of_matches = matchService.get_organized_tournament_match_display(ID);
 
+        int rounds = matchService.get_tournament_round(ID);
+        if(rounds == 1){
+            model.addAttribute("bracket", "fragments/bracket/2_player_bracket.html");
+        } else if(rounds == 2) {
+            List<MatchDisplay> round1_list = new ArrayList<>();
+            List<MatchDisplay> round2_list = new ArrayList<>();
+            for(int i = 0; i < list_of_matches.size(); i++){
+                if(list_of_matches.get(i).getRound() == 1){
+                    round1_list.add(list_of_matches.get(i));
+                } else{
+                    round2_list.add(list_of_matches.get(i));
+                }
+            }
+            model.addAttribute("round1_list", round1_list);
+            model.addAttribute("round2_list", round2_list);
+            model.addAttribute("bracket", "fragments/bracket/4_player_bracket.html");
+        } else {
+            List<MatchDisplay> round1_list = new ArrayList<>();
+            List<MatchDisplay> round2_list = new ArrayList<>();
+            List<MatchDisplay> round3_list = new ArrayList<>();
+            for(int i = 0; i < list_of_matches.size(); i++){
+                if(list_of_matches.get(i).getRound() == 1){
+                    round1_list.add(list_of_matches.get(i));
+                } else if (list_of_matches.get(i).getRound() == 2){
+                    round2_list.add(list_of_matches.get(i));
+                } else {
+                    round3_list.add(list_of_matches.get(i));
+                }
+            }
+            model.addAttribute("round1_list", round1_list);
+            model.addAttribute("round2_list", round2_list);
+            model.addAttribute("round3_list", round3_list);
+            model.addAttribute("bracket", "fragments/bracket/8_player_bracket.html");
+
+        }
+
         model.addAttribute("match_list", list_of_matches);
         model.addAttribute("tournament_id", ID);
         model.addAttribute("tournament", t);
         model.addAttribute("people_list", peopleService.find_related_tournaments(ID));
-        model.addAttribute("bracket", "fragments/bracket/2_round");
 
         return "view_tournament";
     }
@@ -150,11 +214,47 @@ public class TournamentController {
         //List<Match> list_of_matches = matchService.find_related_tournaments(ID);
         List<MatchDisplay> list_of_matches = matchService.get_organized_tournament_match_display(ID);
 
+        int rounds = tournamentService.get_max_rounds(t);
+
+        if(rounds == 1){
+            model.addAttribute("bracket", "fragments/bracket/2_player_bracket.html");
+        } else if(rounds == 2) {
+            List<MatchDisplay> round1_list = new ArrayList<>();
+            List<MatchDisplay> round2_list = new ArrayList<>();
+            for(int i = 0; i < list_of_matches.size(); i++){
+                if(list_of_matches.get(i).getRound() == 1){
+                    round1_list.add(list_of_matches.get(i));
+                } else{
+                    round2_list.add(list_of_matches.get(i));
+                }
+            }
+            model.addAttribute("round1_list", round1_list);
+            model.addAttribute("round2_list", round2_list);
+            model.addAttribute("bracket", "fragments/bracket/4_player_bracket.html");
+        } else {
+            List<MatchDisplay> round1_list = new ArrayList<>();
+            List<MatchDisplay> round2_list = new ArrayList<>();
+            List<MatchDisplay> round3_list = new ArrayList<>();
+            for (int i = 0; i < list_of_matches.size(); i++) {
+                if (list_of_matches.get(i).getRound() == 1) {
+                    round1_list.add(list_of_matches.get(i));
+                } else if (list_of_matches.get(i).getRound() == 2) {
+                    round2_list.add(list_of_matches.get(i));
+                } else {
+                    round3_list.add(list_of_matches.get(i));
+                }
+            }
+            model.addAttribute("round1_list", round1_list);
+            model.addAttribute("round2_list", round2_list);
+            model.addAttribute("round3_list", round3_list);
+            model.addAttribute("bracket", "fragments/bracket/8_player_bracket.html");
+
+        }
+
         model.addAttribute("match_list", list_of_matches);
         model.addAttribute("tournament_id", ID);
         model.addAttribute("tournament", tournamentService.findTournament(ID));
         model.addAttribute("people_list", peopleService.find_related_tournaments(ID));
-        model.addAttribute("bracket", "fragments/bracket/2_round");
 
         return "view_tournament";
     }
@@ -167,11 +267,48 @@ public class TournamentController {
 
         //List<Match> list_of_matches = matchService.find_related_tournaments(ID);
         List<MatchDisplay> list_of_matches = matchService.get_organized_tournament_match_display(ID);
+        int rounds = tournamentService.get_max_rounds(tournamentService.findTournament(ID));
+
+        if(rounds == 1){
+            model.addAttribute("bracket", "fragments/bracket/2_player_bracket.html");
+        } else if(rounds == 2) {
+            List<MatchDisplay> round1_list = new ArrayList<>();
+            List<MatchDisplay> round2_list = new ArrayList<>();
+            for(int i = 0; i < list_of_matches.size(); i++){
+                if(list_of_matches.get(i).getRound() == 1){
+                    round1_list.add(list_of_matches.get(i));
+                } else{
+                    round2_list.add(list_of_matches.get(i));
+                }
+            }
+            model.addAttribute("round1_list", round1_list);
+            model.addAttribute("round2_list", round2_list);
+            model.addAttribute("bracket", "fragments/bracket/4_player_bracket.html");
+        } else {
+            List<MatchDisplay> round1_list = new ArrayList<>();
+            List<MatchDisplay> round2_list = new ArrayList<>();
+            List<MatchDisplay> round3_list = new ArrayList<>();
+            for(int i = 0; i < list_of_matches.size(); i++){
+                if(list_of_matches.get(i).getRound() == 1){
+                    round1_list.add(list_of_matches.get(i));
+                } else if (list_of_matches.get(i).getRound() == 2){
+                    round2_list.add(list_of_matches.get(i));
+                } else {
+                    round3_list.add(list_of_matches.get(i));
+                }
+            }
+            model.addAttribute("round1_list", round1_list);
+            model.addAttribute("round2_list", round2_list);
+            model.addAttribute("round3_list", round3_list);
+            model.addAttribute("bracket", "fragments/bracket/8_player_bracket.html");
+
+        }
+
+
         model.addAttribute("match_list", list_of_matches);
         model.addAttribute("tournament_id", ID);
         model.addAttribute("tournament", tournamentService.findTournament(ID));
         model.addAttribute("people_list", peopleService.find_related_tournaments(ID));
-        model.addAttribute("bracket", "fragments/bracket/2_round");
 
         return "view_tournament";
     }
@@ -188,11 +325,47 @@ public class TournamentController {
 
         //List<Match> list_of_matches = matchService.find_related_tournaments(ID);
         List<MatchDisplay> list_of_matches = matchService.get_organized_tournament_match_display(ID);
+
+        if(rounds == 1){
+            model.addAttribute("bracket", "fragments/bracket/2_player_bracket.html");
+        } else if(rounds == 2) {
+            List<MatchDisplay> round1_list = new ArrayList<>();
+            List<MatchDisplay> round2_list = new ArrayList<>();
+            for(int i = 0; i < list_of_matches.size(); i++){
+                if(list_of_matches.get(i).getRound() == 1){
+                    round1_list.add(list_of_matches.get(i));
+                } else{
+                    round2_list.add(list_of_matches.get(i));
+                }
+            }
+            model.addAttribute("round1_list", round1_list);
+            model.addAttribute("round2_list", round2_list);
+            model.addAttribute("bracket", "fragments/bracket/4_player_bracket.html");
+        } else {
+            List<MatchDisplay> round1_list = new ArrayList<>();
+            List<MatchDisplay> round2_list = new ArrayList<>();
+            List<MatchDisplay> round3_list = new ArrayList<>();
+            for(int i = 0; i < list_of_matches.size(); i++){
+                if(list_of_matches.get(i).getRound() == 1){
+                    round1_list.add(list_of_matches.get(i));
+                } else if (list_of_matches.get(i).getRound() == 2){
+                    round2_list.add(list_of_matches.get(i));
+                } else {
+                    round3_list.add(list_of_matches.get(i));
+                }
+            }
+            model.addAttribute("round1_list", round1_list);
+            model.addAttribute("round2_list", round2_list);
+            model.addAttribute("round3_list", round3_list);
+            model.addAttribute("bracket", "fragments/bracket/8_player_bracket.html");
+
+        }
+
+
         model.addAttribute("match_list", list_of_matches);
         model.addAttribute("tournament_id", ID);
         model.addAttribute("tournament", tournament);
         model.addAttribute("people_list", players);
-        model.addAttribute("bracket", "fragments/bracket/2_round");
 
         return "view_tournament";
     }
@@ -231,13 +404,54 @@ public class TournamentController {
         List<MatchDisplay> list_of_matches = matchService.get_organized_tournament_match_display(tournament_id);
 
         List<Person> players = peopleService.find_related_tournaments(tournament_id);
+        int rounds = tournamentService.get_max_rounds(tournament);
+
+        if(rounds == 1){
+            model.addAttribute("bracket", "fragments/bracket/2_player_bracket.html");
+        } else if(rounds == 2) {
+            List<MatchDisplay> round1_list = new ArrayList<>();
+            List<MatchDisplay> round2_list = new ArrayList<>();
+            for(int i = 0; i < list_of_matches.size(); i++){
+                if(list_of_matches.get(i).getRound() == 1){
+                    round1_list.add(list_of_matches.get(i));
+                } else{
+                    round2_list.add(list_of_matches.get(i));
+                }
+            }
+            model.addAttribute("round1_list", round1_list);
+            model.addAttribute("round2_list", round2_list);
+            model.addAttribute("bracket", "fragments/bracket/4_player_bracket.html");
+        } else {
+            List<MatchDisplay> round1_list = new ArrayList<>();
+            List<MatchDisplay> round2_list = new ArrayList<>();
+            List<MatchDisplay> round3_list = new ArrayList<>();
+            for(int i = 0; i < list_of_matches.size(); i++){
+                if(list_of_matches.get(i).getRound() == 1){
+                    round1_list.add(list_of_matches.get(i));
+                } else if (list_of_matches.get(i).getRound() == 2){
+                    round2_list.add(list_of_matches.get(i));
+                } else {
+                    round3_list.add(list_of_matches.get(i));
+                }
+            }
+            model.addAttribute("round1_list", round1_list);
+            model.addAttribute("round2_list", round2_list);
+            model.addAttribute("round3_list", round3_list);
+            model.addAttribute("bracket", "fragments/bracket/8_player_bracket.html");
+
+        }
+
         model.addAttribute("match_list", list_of_matches);
         model.addAttribute("tournament_id", tournament_id);
         model.addAttribute("tournament", tournament);
         model.addAttribute("people_list", players);
-        model.addAttribute("bracket", "fragments/bracket/2_round");
 
         return "view_tournament";
+    }
+
+    public Model add_bracket_attribute(Model model, List<MatchDisplay> matches){
+
+        return model;
     }
 
 }

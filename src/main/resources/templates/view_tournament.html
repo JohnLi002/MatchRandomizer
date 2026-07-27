@@ -76,7 +76,7 @@
         <td th:text="${match.round}"></td>
         <td th:text="${match.winner} ?: 'N/A'"></td>
         <td>
-            <a th:href="@{/tournament/{id}/match/{match_id}/winner/{winner_id} (id=${tournament_id}, match_id=${match.match_id}, winner_id=${match.player2_id ?: '1'})}">
+            <a th:href="@{/tournament/{id}/match/{match_id}/winner/{winner_id} (id=${tournament_id}, match_id=${match.match_id}, winner_id=${match.player1_id ?: '1'})}">
                 <button class="btn btn-danger" th:text="${match.player1} ?: 'N/A'" th:if="${match.player1_id != -1 and match.player2_id != -1}"></button>
             </a>
             <a th:href="@{/tournament/{id}/match/{match_id}/winner/{winner_id} (id=${tournament_id}, match_id=${match.match_id}, winner_id=${match.player2_id ?: '1'})}">
